@@ -1,4 +1,4 @@
-package com.willi.twitter;
+package com.willi.twitter.dto;
 
 import java.time.LocalDateTime;
 

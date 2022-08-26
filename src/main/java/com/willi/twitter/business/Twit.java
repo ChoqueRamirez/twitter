@@ -1,4 +1,4 @@
-package com.willi.twitter;
+package com.willi.twitter.business;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -11,21 +11,26 @@ public class Twit {
         "trolo"
     );
 
+    private final Long id;
     private String content;
     private final LocalDateTime creationDate;
+    private Long likes;
 
-    public Twit(String content) {
+    public Twit(Long id, String content) {
         final boolean isATwitWithInsult = isATwitWithInsult(content);
 
         if(content.length() > 140 || isATwitWithInsult){
             throw new RuntimeException("Twit muy largo o estas puteando");
         }
+        this.id = id;
         this.content = content;
         this.creationDate = LocalDateTime.now();
+        this.likes = 0L;
     }
 
     private boolean isATwitWithInsult(String twitContent) {
-        return notValidWords.stream().anyMatch(twitContent::contains);
+        return notValidWords.stream()
+                .anyMatch(nvw -> twitContent.toLowerCase().contains(nvw.toLowerCase()));
     }
 
     public String getContent() {
@@ -42,5 +47,17 @@ public class Twit {
 
     public Integer calculateLength(){
         return content.length();
+    }
+
+    public Long getLikes() {
+        return likes;
+    }
+
+    public void like(){
+        this.likes++;
+    }
+
+    public Long getId() {
+        return id;
     }
 }

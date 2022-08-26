@@ -1,4 +1,4 @@
-package com.willi.twitter;
+package com.willi.twitter.business;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,5 +35,12 @@ public class User {
 
     public void twit(Twit twit) {
         twits.add(twit);
+    }
+
+    public Twit giveMeTheTwit(Long twitId) {
+        return twits.stream()
+                .filter(t -> t.getId().equals(twitId))
+                .findFirst()
+                .orElseThrow(RuntimeException::new);
     }
 }
