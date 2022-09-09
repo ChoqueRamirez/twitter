@@ -6,7 +6,6 @@ import com.willi.twitter.dto.TwitterCreationDTO;
 import com.willi.twitter.repository.TwitRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -32,6 +31,18 @@ public class TwitService {
         user.twit(twit);
 
         twitCount++;
+    }
+
+    public List<Twit> getTwits(Long userId){
+        User user = twitRepository.getUser(userId);
+        List<Twit> twits = user.getTwits();
+        return twits;
+    }
+
+    public void like(Long userId, Long twitId){
+        User user = twitRepository.getUser(userId);
+        Twit twit = user.giveMeTheTwit(twitId);
+        twit.like();
     }
 
 
