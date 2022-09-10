@@ -1,6 +1,7 @@
 package com.willi.twitter.business;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -15,6 +16,7 @@ public class Twit {
     private String content;
     private final LocalDateTime creationDate;
     private Long likes;
+    private List<User> userLikes;
 
     public Twit(Long id, String content) {
         final boolean isATwitWithInsult = isATwitWithInsult(content);
@@ -26,6 +28,7 @@ public class Twit {
         this.content = content;
         this.creationDate = LocalDateTime.now();
         this.likes = 0L;
+        this.userLikes = new ArrayList<>();
     }
 
     private boolean isATwitWithInsult(String twitContent) {
@@ -53,11 +56,20 @@ public class Twit {
         return likes;
     }
 
-    public void like(){
+    public void like(User userLike){
         this.likes++;
+        userLikes.add(userLike);
+
+
+    }
+
+    public void dislike(User userLike){
+        this.likes--;
+        userLikes.remove(userLike);
     }
 
     public Long getId() {
         return id;
     }
+
 }
