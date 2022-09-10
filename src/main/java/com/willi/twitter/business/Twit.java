@@ -74,5 +74,17 @@ public class Twit {
         return userLikes;
     }
 
+    public void likeDislike(User userLike){
+        List<User> twitUserLikes = userLikes;
+
+        boolean isAUserLikeInTheTwit = twitUserLikes.stream().anyMatch(tul -> tul.getId().equals(userLike.getId()));
+
+        if (!isAUserLikeInTheTwit){
+            like(userLike);
+        }else {
+            dislike(userLike);
+        }
+
+    }
 
 }

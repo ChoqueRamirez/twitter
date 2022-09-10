@@ -46,17 +46,7 @@ public class TwitService {
 
         Twit twit = user.giveMeTheTwit(twitId);
 
-        List<User> twitUserLikes = twit.getUserLikes();
-
-        boolean isAUserLikeInTheTwit = twitUserLikes.stream().anyMatch(tul -> tul.getId().equals(userLike.getId()));
-
-        if (!isAUserLikeInTheTwit){
-            twit.like(userLike);
-        }else {
-            twit.dislike(userLike);
-        }
-
+        twit.likeDislike(userLike);
     }
-
 
 }
