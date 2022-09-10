@@ -56,11 +56,13 @@ public class Twit {
         return likes;
     }
 
+    public Long getId() {
+        return id;
+    }
+
     public void like(User userLike){
         this.likes++;
         userLikes.add(userLike);
-
-
     }
 
     public void dislike(User userLike){
@@ -68,8 +70,9 @@ public class Twit {
         userLikes.remove(userLike);
     }
 
-    public Long getId() {
-        return id;
+    public List<User> getUserLikes(){
+        return userLikes;
     }
+
 
 }

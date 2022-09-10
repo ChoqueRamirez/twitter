@@ -3,7 +3,7 @@ package com.willi.twitter.services;
 import com.willi.twitter.business.Twit;
 import com.willi.twitter.business.User;
 import com.willi.twitter.dto.TwitterCreationDTO;
-import com.willi.twitter.dto.UserDTO;
+import com.willi.twitter.dto.UserLikeDTO;
 import com.willi.twitter.repository.TwitRepository;
 import org.springframework.stereotype.Service;
 
@@ -40,11 +40,21 @@ public class TwitService {
         return twits;
     }
 
-    public void like(Long userId, Long twitId, UserDTO userLikeTwit){
+    public void like(Long userId, Long twitId, UserLikeDTO userLikeTwit){
         User user = twitRepository.getUser(userId);
-        User userLike = twitRepository.getUser(userLikeTwit.getId());
+        User userLike = twitRepository.getUser(userLikeTwit.getUserLikeId());
+
         Twit twit = user.giveMeTheTwit(twitId);
-        twit.like(userLike);
+
+        List<User> twitUserLikes = twit.getUserLikes();
+
+        boolean isAUserLikeInTheTwit = twitUserLikes.stream().anyMatch(tul -> tul.getId().equals(userLike.getId()));
+
+        if (!isAUserLikeInTheTwit){
+            twit.like(userLike);
+        }else {
+            twit.dislike(userLike);
+        }
 
     }
 
