@@ -43,4 +43,5 @@ public class User {
                 .findFirst()
                 .orElseThrow(RuntimeException::new);
     }
+
 }

@@ -3,6 +3,7 @@ package com.willi.twitter.controller;
 import com.willi.twitter.business.Twit;
 import com.willi.twitter.dto.TwitResponseDTO;
 import com.willi.twitter.dto.TwitterCreationDTO;
+import com.willi.twitter.dto.UserLikeDTO;
 import com.willi.twitter.services.TwitService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -51,8 +52,8 @@ public class TwitController {
     }
 
     @PatchMapping("/user/{userId}/twits/{twitId}/like")
-    public ResponseEntity<?> like(@PathVariable Long userId, @PathVariable Long twitId){
-        twitService.like(userId, twitId);
+    public ResponseEntity<?> like(@PathVariable Long userId, @PathVariable Long twitId, @RequestBody UserLikeDTO userLikeTwit){
+        twitService.like(userId, twitId, userLikeTwit);
         return ResponseEntity.ok().build();
     }
 

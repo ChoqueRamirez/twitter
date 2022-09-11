@@ -3,6 +3,7 @@ package com.willi.twitter.services;
 import com.willi.twitter.business.Twit;
 import com.willi.twitter.business.User;
 import com.willi.twitter.dto.TwitterCreationDTO;
+import com.willi.twitter.dto.UserLikeDTO;
 import com.willi.twitter.repository.TwitRepository;
 import org.springframework.stereotype.Service;
 
@@ -39,11 +40,13 @@ public class TwitService {
         return twits;
     }
 
-    public void like(Long userId, Long twitId){
+    public void like(Long userId, Long twitId, UserLikeDTO userLikeTwit){
         User user = twitRepository.getUser(userId);
-        Twit twit = user.giveMeTheTwit(twitId);
-        twit.like();
-    }
+        User userLike = twitRepository.getUser(userLikeTwit.getUserLikeId());
 
+        Twit twit = user.giveMeTheTwit(twitId);
+
+        twit.likeDislike(userLike);
+    }
 
 }
