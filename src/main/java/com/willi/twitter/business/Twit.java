@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Twit {
 
@@ -15,7 +16,7 @@ public class Twit {
     private final Long id;
     private String content;
     private final LocalDateTime creationDate;
-    private Long likes;
+    private Long amountLikes;
     private List<User> userLikes;
 
     public Twit(Long id, String content) {
@@ -27,7 +28,7 @@ public class Twit {
         this.id = id;
         this.content = content;
         this.creationDate = LocalDateTime.now();
-        this.likes = 0L;
+        this.amountLikes = 0L;
         this.userLikes = new ArrayList<>();
     }
 
@@ -52,26 +53,36 @@ public class Twit {
         return content.length();
     }
 
-    public Long getLikes() {
-        return likes;
+    public Long getAmountLikes() {
+        return amountLikes;
     }
 
     public Long getId() {
         return id;
     }
 
-    public void like(User userLike){
-        this.likes++;
+    private void like(User userLike){
+        this.amountLikes++;
         userLikes.add(userLike);
+
     }
 
-    public void dislike(User userLike){
-        this.likes--;
+    private void dislike(User userLike){
+        this.amountLikes--;
         userLikes.remove(userLike);
     }
 
-    public List<User> getUserLikes(){
-        return userLikes;
+    public List<UserLike> getUserLikesListWithIdAndDate(){
+        List<UserLike> listaModicicada = userLikes.stream()
+                .map(ul -> new UserLike(ul.getId())).collect(Collectors.toList());
+
+        return listaModicicada;
+    }
+
+
+    public List<Long> getUserLikesId(List<User> userLikes){
+
+        return userLikes.stream().map(User::getId).collect(Collectors.toList());
     }
 
     public void likeDislike(User userLike){

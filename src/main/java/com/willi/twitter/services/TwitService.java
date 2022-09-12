@@ -49,4 +49,8 @@ public class TwitService {
         twit.likeDislike(userLike);
     }
 
+    public User getUser (Long userId){
+        return twitRepository.getUser(userId);
+    }
+
 }

@@ -16,7 +16,7 @@ public class TwitTest {
         twit.like();
         twit.like();
         twit.like();
-        Assertions.assertEquals(Long.valueOf(4), twit.getLikes());
+        Assertions.assertEquals(Long.valueOf(4), twit.getAmountLikes());
     }
 
     @Test
@@ -26,7 +26,7 @@ public class TwitTest {
                 "Aguante Bokita"
         );
 
-        Assertions.assertEquals(Long.valueOf(0), twit.getLikes());
+        Assertions.assertEquals(Long.valueOf(0), twit.getAmountLikes());
     }
 
     @org.junit.Test(expected = RuntimeException.class)
