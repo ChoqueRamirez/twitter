@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class Twit {
@@ -17,7 +18,7 @@ public class Twit {
     private String content;
     private final LocalDateTime creationDate;
     private Long amountLikes;
-    private List<User> userLikes;
+    private List<UserLike> userLikes;
 
     public Twit(Long id, String content) {
         final boolean isATwitWithInsult = isATwitWithInsult(content);
@@ -49,9 +50,6 @@ public class Twit {
         return creationDate;
     }
 
-    public Integer calculateLength(){
-        return content.length();
-    }
 
     public Long getAmountLikes() {
         return amountLikes;
@@ -61,41 +59,42 @@ public class Twit {
         return id;
     }
 
+    public List<UserLike> getUserLikes() {
+        return userLikes;
+    }
+
+    public Integer calculateLength(){
+        return content.length();
+    }
+
     private void like(User userLike){
         this.amountLikes++;
-        userLikes.add(userLike);
+        Long userLikeId = userLike.getId();
+        userLikes.add(new UserLike(userLikeId));
 
     }
 
     private void dislike(User userLike){
         this.amountLikes--;
-        userLikes.remove(userLike);
-    }
-
-    public List<UserLike> getUserLikesListWithIdAndDate(){
-        List<UserLike> listaModicicada = userLikes.stream()
-                .map(ul -> new UserLike(ul.getId())).collect(Collectors.toList());
-
-        return listaModicicada;
+        UserLike userRemove = userLikes.stream()
+                .filter(ul -> ul.getUserLikeId().equals(userLike.getId()))
+                .findFirst()
+                .orElseThrow(RuntimeException::new);
+        userLikes.remove(userRemove);
     }
 
 
-    public List<Long> getUserLikesId(List<User> userLikes){
+    public void likeDislike(User user){
+        List<UserLike> twitUserLikes = userLikes;
 
-        return userLikes.stream().map(User::getId).collect(Collectors.toList());
-    }
-
-    public void likeDislike(User userLike){
-        List<User> twitUserLikes = userLikes;
-
-        boolean isAUserLikeInTheTwit = twitUserLikes.stream().anyMatch(tul -> tul.getId().equals(userLike.getId()));
+        boolean isAUserLikeInTheTwit = twitUserLikes.stream().anyMatch(tul -> tul.getUserLikeId().equals(user.getId()));
 
         if (!isAUserLikeInTheTwit){
-            like(userLike);
+            like(user);
         }else {
-            dislike(userLike);
+            dislike(user);
         }
-
     }
+
 
 }

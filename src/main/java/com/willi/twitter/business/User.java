@@ -10,11 +10,6 @@ public class User {
     private String password;
     private final List<Twit> twits;
 
-//    public User (Long id){
-//        this.id = id;
-//
-//    }
-
     public User(Long id, String email, String password) {
         this.id = id;
         this.email = email;

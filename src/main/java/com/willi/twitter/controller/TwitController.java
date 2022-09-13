@@ -2,6 +2,7 @@ package com.willi.twitter.controller;
 
 import com.willi.twitter.business.Twit;
 import com.willi.twitter.business.User;
+import com.willi.twitter.business.UserLike;
 import com.willi.twitter.dto.TwitResponseDTO;
 import com.willi.twitter.dto.TwitterCreationDTO;
 import com.willi.twitter.dto.UserLikeDTO;
@@ -45,15 +46,15 @@ public class TwitController {
     @GetMapping("/user/{userId}/twits")
     public ResponseEntity<List<TwitResponseDTO>> getTwits(@PathVariable Long userId){
 
-        List<UserLikeResponseDTO> userLikeList = Arrays.asList(
-
-        );
-
-
         List<Twit> twits = twitService.getTwits(userId);
 
-        List<TwitResponseDTO> twitsResponse = twits.stream()
-                .map(t -> new TwitResponseDTO(t.getId(), t.getContent(), t.getCreationDate().toLocalDate(), t.getAmountLikes(), t.getUserLikesListWithIdAndDate()))
+        List<TwitResponseDTO> twitsResponse = twits
+                .stream()
+                .map(t -> new TwitResponseDTO(t.getId(), t.getContent(), t.getCreationDate().toLocalDate(), t.getAmountLikes(),
+                        t.getUserLikes().stream()
+                                .map(ul -> new UserLikeResponseDTO(ul.getUserLikeId(), ul.getLikeDate()))
+                                .collect(Collectors.toList())
+                ))
                 .collect(Collectors.toList());
 
         return ResponseEntity.ok(twitsResponse);

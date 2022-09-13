@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 
 public class UserLike {
     private Long userLikeId;
-    private LocalDateTime likeDate;
+    private final LocalDateTime likeDate;
 
     public UserLike(Long userLikeId) {
         this.userLikeId = userLikeId;
@@ -21,9 +21,5 @@ public class UserLike {
 
     public LocalDateTime getLikeDate() {
         return likeDate;
-    }
-
-    public void setLikeDate(LocalDateTime likeDate) {
-        this.likeDate = likeDate;
     }
 }
