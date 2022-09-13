@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class Twit {
 
@@ -15,8 +17,8 @@ public class Twit {
     private final Long id;
     private String content;
     private final LocalDateTime creationDate;
-    private Long likes;
-    private List<User> userLikes;
+    private Long amountLikes;
+    private List<UserLike> userLikes;
 
     public Twit(Long id, String content) {
         final boolean isATwitWithInsult = isATwitWithInsult(content);
@@ -27,7 +29,7 @@ public class Twit {
         this.id = id;
         this.content = content;
         this.creationDate = LocalDateTime.now();
-        this.likes = 0L;
+        this.amountLikes = 0L;
         this.userLikes = new ArrayList<>();
     }
 
@@ -48,43 +50,51 @@ public class Twit {
         return creationDate;
     }
 
-    public Integer calculateLength(){
-        return content.length();
-    }
 
-    public Long getLikes() {
-        return likes;
+    public Long getAmountLikes() {
+        return amountLikes;
     }
 
     public Long getId() {
         return id;
     }
 
-    public void like(User userLike){
-        this.likes++;
-        userLikes.add(userLike);
-    }
-
-    public void dislike(User userLike){
-        this.likes--;
-        userLikes.remove(userLike);
-    }
-
-    public List<User> getUserLikes(){
+    public List<UserLike> getUserLikes() {
         return userLikes;
     }
 
-    public void likeDislike(User userLike){
-        List<User> twitUserLikes = userLikes;
+    public Integer calculateLength(){
+        return content.length();
+    }
 
-        boolean isAUserLikeInTheTwit = twitUserLikes.stream().anyMatch(tul -> tul.getId().equals(userLike.getId()));
-
-        if (!isAUserLikeInTheTwit){
-            like(userLike);
-        }else {
-            dislike(userLike);
-        }
+    private void like(User userLike){
+        this.amountLikes++;
+        Long userLikeId = userLike.getId();
+        userLikes.add(new UserLike(userLikeId));
 
     }
+
+    private void dislike(User userLike){
+        this.amountLikes--;
+        UserLike userRemove = userLikes.stream()
+                .filter(ul -> ul.getUserLikeId().equals(userLike.getId()))
+                .findFirst()
+                .orElseThrow(RuntimeException::new);
+        userLikes.remove(userRemove);
+    }
+
+
+    public void likeDislike(User user){
+        List<UserLike> twitUserLikes = userLikes;
+
+        boolean isAUserLikeInTheTwit = twitUserLikes.stream().anyMatch(tul -> tul.getUserLikeId().equals(user.getId()));
+
+        if (!isAUserLikeInTheTwit){
+            like(user);
+        }else {
+            dislike(user);
+        }
+    }
+
 
 }

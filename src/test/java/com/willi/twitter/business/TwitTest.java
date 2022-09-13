@@ -1,8 +1,8 @@
 package com.willi.twitter.business;
 
 
+import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
 
 public class TwitTest {
 
@@ -12,11 +12,53 @@ public class TwitTest {
                 1L,
                 "Aguante Bokita"
         );
-        twit.like();
-        twit.like();
-        twit.like();
-        twit.like();
-        Assertions.assertEquals(Long.valueOf(4), twit.getLikes());
+        User gerito = new User(
+                1L,
+                "gerito@gmail.com",
+                "1234"
+        );
+        User williwonkis = new User(
+                2L,
+                "willi@gmail.com",
+                "2345"
+        );
+        User centu = new User(
+                3L,
+                "centu@gmail.com",
+                "23456"
+        );
+        User camarin = new User(
+                4L,
+                "camarita@gmail.com",
+                "dadsad2"
+        );
+        twit.likeDislike(centu);
+        twit.likeDislike(williwonkis);
+        twit.likeDislike(gerito);
+        twit.likeDislike(camarin);
+        Assertions.assertEquals(Long.valueOf(4), twit.getAmountLikes());
+    }
+
+    @Test
+    public void whenLike3TimesWithSameUserTwitMustHave1Like() {
+        Twit twit = new Twit(
+                1L,
+                "Aguante Bokita"
+        );
+        User gerito = new User(
+                1L,
+                "gerito@gmail.com",
+                "1234"
+        );
+        User williwonkis = new User(
+                2L,
+                "willi@gmail.com",
+                "2345"
+        );
+        twit.likeDislike(williwonkis);
+        twit.likeDislike(gerito);
+        twit.likeDislike(gerito);
+        Assertions.assertEquals(Long.valueOf(1), twit.getAmountLikes());
     }
 
     @Test
@@ -26,10 +68,10 @@ public class TwitTest {
                 "Aguante Bokita"
         );
 
-        Assertions.assertEquals(Long.valueOf(0), twit.getLikes());
+        Assertions.assertEquals(Long.valueOf(0), twit.getAmountLikes());
     }
 
-    @org.junit.Test(expected = RuntimeException.class)
+    @Test(expected = RuntimeException.class)
     public void twitIsValid() {
         Twit twit = new Twit(
                 1L,

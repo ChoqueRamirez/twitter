@@ -1,27 +1,31 @@
 package com.willi.twitter.dto;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public class TwitResponseDTO {
 
     public Long id;
     public String content;
     public LocalDate creationDate;
-    public Long likes;
+    public Long amountLikes;
+    public List<UserLikeResponseDTO> userLikesResponse;
 
-    public TwitResponseDTO(Long id, String content, LocalDate creationDate, Long likes) {
+
+    public TwitResponseDTO(Long id, String content, LocalDate creationDate, Long amountLikes, List<UserLikeResponseDTO> userLikesResponse) {
         this.id = id;
         this.content = content;
         this.creationDate = creationDate;
-        this.likes = likes;
+        this.amountLikes = amountLikes;
+        this.userLikesResponse = userLikesResponse;
     }
 
-    public Long getLikes() {
-        return likes;
+    public Long getAmountLikes() {
+        return amountLikes;
     }
 
-    public void setLikes(Long likes) {
-        this.likes = likes;
+    public void setAmountLikes(Long amountLikes) {
+        this.amountLikes = amountLikes;
     }
 
     public String getContent() {
@@ -39,4 +43,9 @@ public class TwitResponseDTO {
     public void setCreationDate(LocalDate creationDate) {
         this.creationDate = creationDate;
     }
+
+    public List<UserLikeResponseDTO> getUserLikesResponse() {
+        return userLikesResponse;
+    }
+
 }

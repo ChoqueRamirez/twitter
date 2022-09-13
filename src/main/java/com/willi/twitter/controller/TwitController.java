@@ -1,14 +1,18 @@
 package com.willi.twitter.controller;
 
 import com.willi.twitter.business.Twit;
+import com.willi.twitter.business.User;
+import com.willi.twitter.business.UserLike;
 import com.willi.twitter.dto.TwitResponseDTO;
 import com.willi.twitter.dto.TwitterCreationDTO;
 import com.willi.twitter.dto.UserLikeDTO;
+import com.willi.twitter.dto.UserLikeResponseDTO;
 import com.willi.twitter.services.TwitService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -44,8 +48,13 @@ public class TwitController {
 
         List<Twit> twits = twitService.getTwits(userId);
 
-        List<TwitResponseDTO> twitsResponse = twits.stream()
-                .map(t -> new TwitResponseDTO(t.getId(), t.getContent(), t.getCreationDate().toLocalDate(), t.getLikes()))
+        List<TwitResponseDTO> twitsResponse = twits
+                .stream()
+                .map(t -> new TwitResponseDTO(t.getId(), t.getContent(), t.getCreationDate().toLocalDate(), t.getAmountLikes(),
+                        t.getUserLikes().stream()
+                                .map(ul -> new UserLikeResponseDTO(ul.getUserLikeId(), ul.getLikeDate()))
+                                .collect(Collectors.toList())
+                ))
                 .collect(Collectors.toList());
 
         return ResponseEntity.ok(twitsResponse);
