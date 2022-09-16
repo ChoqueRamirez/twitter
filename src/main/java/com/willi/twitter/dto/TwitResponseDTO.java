@@ -6,6 +6,7 @@ import java.util.List;
 public class TwitResponseDTO {
 
     public Long id;
+    public Long originalTwitId;
     public String content;
     public LocalDate creationDate;
     public Long amountLikes;
@@ -13,8 +14,9 @@ public class TwitResponseDTO {
     public Long retweets;
 
 
-    public TwitResponseDTO(Long id, String content, LocalDate creationDate, Long amountLikes, Long retweets, List<UserLikeResponseDTO> userLikesResponse) {
+    public TwitResponseDTO(Long id, Long originalTwitId, String content, LocalDate creationDate, Long amountLikes, Long retweets, List<UserLikeResponseDTO> userLikesResponse) {
         this.id = id;
+        this.originalTwitId = originalTwitId;
         this.content = content;
         this.creationDate = creationDate;
         this.amountLikes = amountLikes;
@@ -48,6 +50,10 @@ public class TwitResponseDTO {
 
     public List<UserLikeResponseDTO> getUserLikesResponse() {
         return userLikesResponse;
+    }
+
+    public Long getOriginalTwitId() {
+        return originalTwitId;
     }
 
 }

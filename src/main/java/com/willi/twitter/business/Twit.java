@@ -13,6 +13,7 @@ public class Twit {
     );
 
     private final Long id;
+    private Long originalTwitId;
     private String content;
     private final LocalDateTime creationDate;
     private List<UserLike> userLikes;
@@ -25,6 +26,7 @@ public class Twit {
             throw new RuntimeException("Twit muy largo o estas puteando");
         }
         this.id = id;
+        this.originalTwitId = 0L;
         this.content = content;
         this.creationDate = LocalDateTime.now();
         this.userLikes = new ArrayList<>();
@@ -36,6 +38,10 @@ public class Twit {
                 .anyMatch(nvw -> twitContent.toLowerCase().contains(nvw.toLowerCase()));
     }
 
+
+    public Long getOriginalTwitId(){
+        return originalTwitId;
+    }
     public String getContent() {
         return content;
     }
@@ -98,6 +104,7 @@ public class Twit {
 
     public void retweet(User userSource, Twit twitToRetweet) {
         twitToRetweet.retweets++;
+        twitToRetweet.originalTwitId++;
         List<Twit> userTwits = userSource.getTwits();
         userTwits.add(twitToRetweet);
     }
