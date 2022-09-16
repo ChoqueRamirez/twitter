@@ -17,7 +17,7 @@ public class Twit {
     private final Long id;
     private String content;
     private final LocalDateTime creationDate;
-    private Long amountLikes;
+    //private Long amountLikes;
     private List<UserLike> userLikes;
 
     public Twit(Long id, String content) {
@@ -29,7 +29,7 @@ public class Twit {
         this.id = id;
         this.content = content;
         this.creationDate = LocalDateTime.now();
-        this.amountLikes = 0L;
+        //this.amountLikes = 0L;
         this.userLikes = new ArrayList<>();
     }
 
@@ -52,7 +52,7 @@ public class Twit {
 
 
     public Long getAmountLikes() {
-        return amountLikes;
+        return (Long) (long) userLikes.size();
     }
 
     public Long getId() {
@@ -68,14 +68,14 @@ public class Twit {
     }
 
     private void like(User userLike){
-        this.amountLikes++;
+        //this.amountLikes++;
         Long userLikeId = userLike.getId();
         userLikes.add(new UserLike(userLikeId));
 
     }
 
     private void dislike(User userLike){
-        this.amountLikes--;
+        //this.amountLikes--;
         UserLike userRemove = userLikes.stream()
                 .filter(ul -> ul.getUserLikeId().equals(userLike.getId()))
                 .findFirst()
