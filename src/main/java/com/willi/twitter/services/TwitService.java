@@ -55,17 +55,12 @@ public class TwitService {
     }
 
     public void retweet(Long sourceUserId, RetweetDTO targetRetweet) {
-        //Traigo al usuario que esta dando el rt
         User userSource = twitRepository.getUser(sourceUserId);
-
-        //Traigo al suuario que tiene el twit a rt
         User targetUser = twitRepository.getUser(targetRetweet.getTargetUserId());
-        //consigo el twit a rt
+
         Twit twitToRetweet = targetUser.giveMeTheTwit(targetRetweet.getTargetTwitId());
 
-        Twit reTwit = new Twit(twitToRetweet.getId(), twitToRetweet.getContent());
+        twitToRetweet.retweet(userSource, twitToRetweet);
 
-        List<Twit> userTwits = userSource.getTwits();
-        userTwits.add(reTwit);
     }
 }

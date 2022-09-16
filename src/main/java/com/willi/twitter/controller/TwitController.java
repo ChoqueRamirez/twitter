@@ -45,8 +45,8 @@ public class TwitController {
         List<TwitResponseDTO> twitsResponse = twits
                 .stream()
                 .map(t -> new TwitResponseDTO(t.getId(), t.getContent(), t.getCreationDate().toLocalDate(), t.getAmountLikes(),
-                        t.getUserLikes().stream()
-                                .map(ul -> new UserLikeResponseDTO(ul.getUserLikeId(), ul.getLikeDate()))
+                        t.getRetweets(), t.getUserLikes().stream()
+                                .map(ul -> new UserLikeResponseDTO(ul.getUserLikeId(), ul.getLikeDate().toLocalDate()))
                                 .collect(Collectors.toList())
                 ))
                 .collect(Collectors.toList());

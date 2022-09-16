@@ -10,13 +10,15 @@ public class TwitResponseDTO {
     public LocalDate creationDate;
     public Long amountLikes;
     public List<UserLikeResponseDTO> userLikesResponse;
+    public Long retweets;
 
 
-    public TwitResponseDTO(Long id, String content, LocalDate creationDate, Long amountLikes, List<UserLikeResponseDTO> userLikesResponse) {
+    public TwitResponseDTO(Long id, String content, LocalDate creationDate, Long amountLikes, Long retweets, List<UserLikeResponseDTO> userLikesResponse) {
         this.id = id;
         this.content = content;
         this.creationDate = creationDate;
         this.amountLikes = amountLikes;
+        this.retweets = retweets;
         this.userLikesResponse = userLikesResponse;
     }
 

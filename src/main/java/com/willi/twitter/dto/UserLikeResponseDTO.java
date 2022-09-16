@@ -5,9 +5,9 @@ import java.time.LocalDateTime;
 
 public class UserLikeResponseDTO {
     private Long userLikeId;
-    private LocalDateTime likeDate;
+    private LocalDate likeDate;
 
-    public UserLikeResponseDTO(Long userLikeId, LocalDateTime likeDate) {
+    public UserLikeResponseDTO(Long userLikeId, LocalDate likeDate) {
         this.userLikeId = userLikeId;
         this.likeDate = likeDate;
     }
@@ -20,11 +20,11 @@ public class UserLikeResponseDTO {
         this.userLikeId = userLikeId;
     }
 
-    public LocalDateTime getLikeDate() {
+    public LocalDate getLikeDate() {
         return likeDate;
     }
 
-    public void setLikeDate(LocalDateTime likeDate) {
+    public void setLikeDate(LocalDate likeDate) {
         this.likeDate = likeDate;
     }
 }

@@ -4,8 +4,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 public class Twit {
 
@@ -18,6 +16,7 @@ public class Twit {
     private String content;
     private final LocalDateTime creationDate;
     private List<UserLike> userLikes;
+    private Long retweets;
 
     public Twit(Long id, String content) {
         final boolean isATwitWithInsult = isATwitWithInsult(content);
@@ -29,6 +28,7 @@ public class Twit {
         this.content = content;
         this.creationDate = LocalDateTime.now();
         this.userLikes = new ArrayList<>();
+        this.retweets = 0L;
     }
 
     private boolean isATwitWithInsult(String twitContent) {
@@ -61,6 +61,14 @@ public class Twit {
         return userLikes;
     }
 
+    public Long getRetweets() {
+        return retweets;
+    }
+
+    public void setRetweets(Long retweets) {
+        this.retweets = retweets;
+    }
+
     public Integer calculateLength(){
         return content.length();
     }
@@ -88,5 +96,9 @@ public class Twit {
         }
     }
 
-
+    public void retweet(User userSource, Twit twitToRetweet) {
+        twitToRetweet.retweets++;
+        List<Twit> userTwits = userSource.getTwits();
+        userTwits.add(twitToRetweet);
+    }
 }
