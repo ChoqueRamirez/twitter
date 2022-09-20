@@ -101,9 +101,10 @@ public class Twit {
         List<UserReTweet> retweetList = userReTweets;
         boolean isAUserRetweetInTheTwit = retweetList.stream().anyMatch(tul -> tul.getUserRetweetId().equals(userSource.getId()));
 
+
         if (!isAUserRetweetInTheTwit){
             retweet(userSource, twitToRetweet);
-        }else {
+        }else if(!userSource.getId().equals(twitToRetweet.getTwitOwnerUserId())) {
             unRetweet(userSource, twitToRetweet);
         }
     }
@@ -116,8 +117,8 @@ public class Twit {
         userTwits.add(twitToRetweet);
     }
 
-    private void unRetweet(User userSource, Twit twitToUnRetwit){
+    private void unRetweet(User userSource, Twit twitToUnRetweet){
         userReTweets.removeIf(u -> u.getUserRetweetId().equals(userSource.getId()));
-        userSource.getTwits().removeIf(u -> u.getId().equals(twitToUnRetwit.getId()));
+        userSource.getTwits().removeIf(u -> u.getId().equals(twitToUnRetweet.getId()));
     }
 }

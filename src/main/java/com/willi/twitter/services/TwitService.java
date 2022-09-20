@@ -2,7 +2,6 @@ package com.willi.twitter.services;
 
 import com.willi.twitter.business.Twit;
 import com.willi.twitter.business.User;
-import com.willi.twitter.dto.TargetTwitDTO;
 import com.willi.twitter.dto.RetweetDTO;
 import com.willi.twitter.dto.TwitterCreationDTO;
 import com.willi.twitter.dto.UserLikeDTO;
@@ -41,6 +40,10 @@ public class TwitService {
         return user.getTwits();
     }
 
+    public User getUser (Long userId){
+        return twitRepository.getUser(userId);
+    }
+
     public void like(Long userId, Long twitId, UserLikeDTO userLikeTwit){
         User user = twitRepository.getUser(userId);
         User userLike = twitRepository.getUser(userLikeTwit.getUserLikeId());
@@ -48,10 +51,6 @@ public class TwitService {
         Twit twit = user.giveMeTheTwit(twitId);
 
         twit.likeDislike(userLike);
-    }
-
-    public User getUser (Long userId){
-        return twitRepository.getUser(userId);
     }
 
     public void retweet(Long sourceUserId, RetweetDTO requestRT) {
