@@ -13,24 +13,24 @@ public class Twit {
     );
 
     private final Long id;
-    private Long originalTwitId;
+    private final Long twitOwnerUserId;
     private String content;
     private final LocalDateTime creationDate;
     private List<UserLike> userLikes;
-    private Long retweets;
+    private List<UserReTweet> userReTweets;
 
-    public Twit(Long id, String content) {
+    public Twit(Long id, Long userId, String content) {
         final boolean isATwitWithInsult = isATwitWithInsult(content);
 
         if(content.length() > 140 || isATwitWithInsult){
             throw new RuntimeException("Twit muy largo o estas puteando");
         }
         this.id = id;
-        this.originalTwitId = 0L;
+        this.twitOwnerUserId = userId;
         this.content = content;
         this.creationDate = LocalDateTime.now();
         this.userLikes = new ArrayList<>();
-        this.retweets = 0L;
+        this.userReTweets = new ArrayList<>();
     }
 
     private boolean isATwitWithInsult(String twitContent) {
@@ -38,10 +38,10 @@ public class Twit {
                 .anyMatch(nvw -> twitContent.toLowerCase().contains(nvw.toLowerCase()));
     }
 
-
-    public Long getOriginalTwitId(){
-        return originalTwitId;
+    public Long getId() {
+        return id;
     }
+
     public String getContent() {
         return content;
     }
@@ -59,36 +59,21 @@ public class Twit {
         return (Long) (long) userLikes.size();
     }
 
-    public Long getId() {
-        return id;
+    public Long getRetweets(){
+        return (Long) (long) userReTweets.size();
     }
 
     public List<UserLike> getUserLikes() {
         return userLikes;
     }
 
-    public Long getRetweets() {
-        return retweets;
-    }
-
-    public void setRetweets(Long retweets) {
-        this.retweets = retweets;
+    public Long getTwitOwnerUserId() {
+        return twitOwnerUserId;
     }
 
     public Integer calculateLength(){
         return content.length();
     }
-
-    private void like(User userLike){
-        Long userLikeId = userLike.getId();
-        userLikes.add(new UserLike(userLikeId));
-
-    }
-
-    private void dislike(User userLike){
-        userLikes.removeIf(u -> u.getUserLikeId().equals(userLike.getId()));
-    }
-
 
     public void likeDislike(User user){
         List<UserLike> twitUserLikes = userLikes;
@@ -102,10 +87,37 @@ public class Twit {
         }
     }
 
-    public void retweet(User userSource, Twit twitToRetweet) {
-        twitToRetweet.retweets++;
-        twitToRetweet.originalTwitId++;
+    private void like(User userLike){
+        Long userLikeId = userLike.getId();
+        userLikes.add(new UserLike(userLikeId));
+
+    }
+
+    private void dislike(User userLike){
+        userLikes.removeIf(u -> u.getUserLikeId().equals(userLike.getId()));
+    }
+
+    public void retweetRequest(User userSource, Twit twitToRetweet) {
+        List<UserReTweet> retweetList = userReTweets;
+        boolean isAUserRetweetInTheTwit = retweetList.stream().anyMatch(tul -> tul.getUserRetweetId().equals(userSource.getId()));
+
+        if (!isAUserRetweetInTheTwit){
+            retweet(userSource, twitToRetweet);
+        }else {
+            unRetweet(userSource, twitToRetweet);
+        }
+    }
+
+    private void retweet(User userSource, Twit twitToRetweet){
+        Long userRetweetId = userSource.getId();
+        userReTweets.add(new UserReTweet(userRetweetId));
+
         List<Twit> userTwits = userSource.getTwits();
         userTwits.add(twitToRetweet);
+    }
+
+    private void unRetweet(User userSource, Twit twitToUnRetwit){
+        userReTweets.removeIf(u -> u.getUserRetweetId().equals(userSource.getId()));
+        userSource.getTwits().removeIf(u -> u.getId().equals(twitToUnRetwit.getId()));
     }
 }

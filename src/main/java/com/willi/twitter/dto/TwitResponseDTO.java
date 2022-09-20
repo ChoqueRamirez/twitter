@@ -6,22 +6,38 @@ import java.util.List;
 public class TwitResponseDTO {
 
     public Long id;
-    public Long originalTwitId;
+    public Long twitOwnerUserId;
     public String content;
     public LocalDate creationDate;
     public Long amountLikes;
-    public List<UserLikeResponseDTO> userLikesResponse;
     public Long retweets;
+    public List<UserLikeResponseDTO> userLikesResponse;
 
 
-    public TwitResponseDTO(Long id, Long originalTwitId, String content, LocalDate creationDate, Long amountLikes, Long retweets, List<UserLikeResponseDTO> userLikesResponse) {
+    public TwitResponseDTO(Long id, Long twitOwnerUserId, String content, LocalDate creationDate, Long amountLikes, Long retweets, List<UserLikeResponseDTO> userLikesResponse) {
         this.id = id;
-        this.originalTwitId = originalTwitId;
+        this.twitOwnerUserId = twitOwnerUserId;
         this.content = content;
         this.creationDate = creationDate;
         this.amountLikes = amountLikes;
         this.retweets = retweets;
         this.userLikesResponse = userLikesResponse;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getTwitOwnerUserId() {
+        return twitOwnerUserId;
+    }
+
+    public void setTwitOwnerUserId(Long twitOwnerUserId) {
+        this.twitOwnerUserId = twitOwnerUserId;
     }
 
     public Long getAmountLikes() {
@@ -48,12 +64,17 @@ public class TwitResponseDTO {
         this.creationDate = creationDate;
     }
 
+    public Long getRetweets() {
+        return retweets;
+    }
+
+    public void setRetweets(Long retweets) {
+        this.retweets = retweets;
+    }
+
     public List<UserLikeResponseDTO> getUserLikesResponse() {
         return userLikesResponse;
     }
 
-    public Long getOriginalTwitId() {
-        return originalTwitId;
-    }
 
 }

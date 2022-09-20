@@ -1,7 +1,5 @@
 package com.willi.twitter.dto;
 
-import java.time.LocalDateTime;
-
 public class TwitterCreationDTO {
     private String twit;
 

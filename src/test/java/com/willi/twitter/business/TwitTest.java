@@ -10,7 +10,7 @@ public class TwitTest {
     public void whenLike4TimesTwitMustHave4Likes() {
         Twit twit = new Twit(
                 1L,
-                "Aguante Bokita"
+                userId, "Aguante Bokita"
         );
         User gerito = new User(
                 1L,
@@ -43,7 +43,7 @@ public class TwitTest {
     public void whenLike3TimesWithSameUserTwitMustHave1Like() {
         Twit twit = new Twit(
                 1L,
-                "Aguante Bokita"
+                userId, "Aguante Bokita"
         );
         User gerito = new User(
                 1L,
@@ -65,7 +65,7 @@ public class TwitTest {
     public void whenCreateTwitMustHave0Likes() {
         Twit twit = new Twit(
                 1L,
-                "Aguante Bokita"
+                userId, "Aguante Bokita"
         );
 
         Assertions.assertEquals(Long.valueOf(0), twit.getAmountLikes());
@@ -75,7 +75,7 @@ public class TwitTest {
     public void twitIsValid() {
         Twit twit = new Twit(
                 1L,
-                "Aguante boka Puto"
+                userId, "Aguante boka Puto"
         );
     }
 }

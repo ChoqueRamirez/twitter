@@ -30,7 +30,7 @@ public class TwitService {
     public void createTwit(Long userId, TwitterCreationDTO request){
         User user = twitRepository.getUser(userId);
 
-        Twit twit = new Twit(twitCount, request.getTwit());
+        Twit twit = new Twit(twitCount, userId, request.getTwit());
         user.twit(twit);
 
         twitCount++;
@@ -54,13 +54,14 @@ public class TwitService {
         return twitRepository.getUser(userId);
     }
 
-    public void retweet(Long sourceUserId, RetweetDTO targetRetweet) {
+    public void retweet(Long sourceUserId, RetweetDTO requestRT) {
         User userSource = twitRepository.getUser(sourceUserId);
-        User targetUser = twitRepository.getUser(targetRetweet.getTargetUserId());
 
-        Twit twitToRetweet = targetUser.giveMeTheTwit(targetRetweet.getTargetTwitId());
+        User targetUser = twitRepository.getUser(requestRT.getTargetUserId());
 
-        twitToRetweet.retweet(userSource, twitToRetweet);
+        Twit twitToRetweet = targetUser.giveMeTheTwit(requestRT.getTargetTwitId());
+
+        twitToRetweet.retweetRequest(userSource, twitToRetweet);
 
     }
 }
