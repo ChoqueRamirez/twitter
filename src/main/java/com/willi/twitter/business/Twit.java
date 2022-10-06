@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 public class Twit {
 
@@ -31,6 +32,16 @@ public class Twit {
         this.creationDate = LocalDateTime.now();
         this.userLikes = new ArrayList<>();
         this.userReTweets = new ArrayList<>();
+    }
+
+    public Twit(Long id, Long twitOwnerUserId, String content,
+                LocalDateTime creationDate, List<UserLike> userLikes, List<UserReTweet> userRetweets){
+        this.id = id;
+        this.twitOwnerUserId = twitOwnerUserId;
+        this.content = content;
+        this.creationDate = creationDate;
+        this.userLikes = userLikes;
+        this.userReTweets = userRetweets;
     }
 
     private boolean isATwitWithInsult(String twitContent) {
@@ -61,6 +72,10 @@ public class Twit {
 
     public Long getRetweets(){
         return (Long) (long) userReTweets.size();
+    }
+
+    public List<UserReTweet> getUserReTweets(){
+        return userReTweets;
     }
 
     public List<UserLike> getUserLikes() {
@@ -97,28 +112,34 @@ public class Twit {
         userLikes.removeIf(u -> u.getUserLikeId().equals(userLike.getId()));
     }
 
-    public void retweetRequest(User userSource, Twit twitToRetweet) {
+
+    public Optional<Twit> retweetRequest(Long twitCount, User userSource, User userTarget, Long twitId) {
+        Twit twitToRetweet = userTarget.giveMeTheTwit(twitId);
+
         List<UserReTweet> retweetList = userReTweets;
+
         boolean isAUserRetweetInTheTwit = retweetList.stream().anyMatch(tul -> tul.getUserRetweetId().equals(userSource.getId()));
 
 
         if (!isAUserRetweetInTheTwit){
-            retweet(userSource, twitToRetweet);
+            return retweet(twitCount ,twitToRetweet);
         }else if(!userSource.getId().equals(twitToRetweet.getTwitOwnerUserId())) {
-            unRetweet(userSource, twitToRetweet);
+            return unRetweet();
         }
+        return Optional.empty();
     }
 
-    private void retweet(User userSource, Twit twitToRetweet){
-        Long userRetweetId = userSource.getId();
-        userReTweets.add(new UserReTweet(userRetweetId));
+    private Optional<Twit> retweet(Long twitCount, Twit twitToRetweet) {
+        Twit twitRetweeted = new Twit(twitCount, twitToRetweet.getTwitOwnerUserId(), twitToRetweet.getContent(),
+                twitToRetweet.getCreationDate(), twitToRetweet.getUserLikes(), twitToRetweet.getUserReTweets());
 
-        List<Twit> userTwits = userSource.getTwits();
-        userTwits.add(twitToRetweet);
+        return Optional.of(twitRetweeted);
     }
 
-    private void unRetweet(User userSource, Twit twitToUnRetweet){
-        userReTweets.removeIf(u -> u.getUserRetweetId().equals(userSource.getId()));
-        userSource.getTwits().removeIf(u -> u.getId().equals(twitToUnRetweet.getId()));
+    private Optional<Twit> unRetweet(){
+        return Optional.empty();
     }
+
+
+
 }
