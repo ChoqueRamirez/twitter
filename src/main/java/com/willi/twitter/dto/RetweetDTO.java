@@ -2,7 +2,6 @@ package com.willi.twitter.dto;
 
 public class RetweetDTO {
     private Long targetUserId;
-
     private Long targetTwitId;
 
     public Long getTargetTwitId() {

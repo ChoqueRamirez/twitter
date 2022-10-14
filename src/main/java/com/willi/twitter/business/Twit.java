@@ -1,10 +1,7 @@
 package com.willi.twitter.business;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public class Twit {
 
@@ -113,30 +110,27 @@ public class Twit {
     }
 
 
-    public Optional<Twit> retweetRequest(Long twitCount, User userSource, User userTarget, Long twitId) {
-        Twit twitToRetweet = userTarget.giveMeTheTwit(twitId);
+    public Optional<Twit> retweetOrUnretweet(Long twitCount, User userSource) {
 
-        List<UserReTweet> retweetList = userReTweets;
-
-        boolean isAUserRetweetInTheTwit = retweetList.stream().anyMatch(tul -> tul.getUserRetweetId().equals(userSource.getId()));
-        if (!isAUserRetweetInTheTwit){
-            return retweet(twitCount ,twitToRetweet);
-        }else if(!userSource.getId().equals(twitToRetweet.getTwitOwnerUserId())) {
-            return unRetweet();
+        boolean hasBeenRetweetedForTheUser = userReTweets.stream().anyMatch(tul -> tul.getUserRetweetId().equals(userSource.getId()));
+        if (!hasBeenRetweetedForTheUser){
+            return retweet(twitCount, userSource);
+        } else {
+            return unRetweet(userSource);
         }
+    }
+
+    private Optional<Twit> unRetweet(User userSource) {
+        userReTweets.removeIf(ur -> Objects.equals(ur.getUserRetweetId(), userSource.getId()));
         return Optional.empty();
     }
 
-    private Optional<Twit> retweet(Long twitCount, Twit twitToRetweet) {
-        Twit twitRetweeted = new Twit(twitCount, twitToRetweet.getTwitOwnerUserId(), twitToRetweet.getContent(),
-                twitToRetweet.getCreationDate(), twitToRetweet.getUserLikes(), twitToRetweet.getUserReTweets());
+    private Optional<Twit> retweet(Long twitCount, User userSource) {
+        Twit twitRetweeted = new Twit(twitCount, twitOwnerUserId, content,
+                creationDate, userLikes, userReTweets);
+        userReTweets.add(new UserReTweet(userSource.getId()));
         return Optional.of(twitRetweeted);
     }
-
-    private Optional<Twit> unRetweet(){
-        return Optional.empty();
-    }
-
 
 
 }

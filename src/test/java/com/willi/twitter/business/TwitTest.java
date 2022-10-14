@@ -96,9 +96,9 @@ public class TwitTest {
                 "camarita@gmail.com",
                 "dadsad2"
         );
-        twit.retweetRequest(centu, twit);
-        twit.retweetRequest(gerito, twit);
-        twit.retweetRequest(camarin, twit);
+        twit.retweetOrUnretweet(1L, centu);
+        twit.retweetOrUnretweet(2L, gerito);
+        twit.retweetOrUnretweet(3L, camarin);
         Assertions.assertEquals(Long.valueOf(3), twit.getRetweets());
     }
 
@@ -127,9 +127,9 @@ public class TwitTest {
                 "willi@gmail.com",
                 "2345"
         );
-        twit.retweetRequest(williwonkis, twit);
-        twit.retweetRequest(williwonkis, twit);
-        twit.retweetRequest(williwonkis, twit);
+        twit.retweetOrUnretweet(1L, williwonkis);
+        twit.retweetOrUnretweet(2L, williwonkis);
+        twit.retweetOrUnretweet(3L, williwonkis);
         Assertions.assertEquals(Long.valueOf(1), twit.getRetweets());
     }
 }

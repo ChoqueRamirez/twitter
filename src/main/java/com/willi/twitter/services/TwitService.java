@@ -2,7 +2,6 @@ package com.willi.twitter.services;
 
 import com.willi.twitter.business.Twit;
 import com.willi.twitter.business.User;
-import com.willi.twitter.business.UserReTweet;
 import com.willi.twitter.dto.RetweetDTO;
 import com.willi.twitter.dto.TwitterCreationDTO;
 import com.willi.twitter.dto.UserLikeDTO;
@@ -60,34 +59,11 @@ public class TwitService {
         User targetUser = twitRepository.getUser(requestRT.getTargetUserId());
         Twit twitToRetweet = targetUser.giveMeTheTwit(requestRT.getTargetTwitId());
 
-        Optional<Twit> optionalRetweet = twitToRetweet.retweetRequest(twitCount, userSource, targetUser, twitToRetweet.getId());
-
-        if (optionalRetweet.isPresent()){
-            doTheRetweet(userSource, twitToRetweet, optionalRetweet);
-        }else{
-            undoTheRetweet(userSource, twitToRetweet);
-        }
-    }
-
-    private void doTheRetweet(User userSource, Twit twitToRetweet, Optional<Twit> optionalRetweet) {
-        List<Twit> userTwits = userSource.getTwits();
-        List<UserReTweet> userReTweets = twitToRetweet.getUserReTweets();
-
-        userReTweets.add(new UserReTweet(userSource.getId()));
-        userTwits.add(optionalRetweet.get());
-        twitCount++;
-    }
-
-    private void undoTheRetweet(User userSource, Twit twitToRetweet) {
-        Optional<Twit> twitToUnRetweet =  userSource.getTwits().stream().filter(t -> t.getContent().equals(twitToRetweet.getContent()))
-                .filter(t -> t.getCreationDate().equals(twitToRetweet.getCreationDate()))
-                .filter(t -> t.getTwitOwnerUserId().equals(twitToRetweet.getTwitOwnerUserId()))
-                .findFirst();
-
-        List<UserReTweet> userReTweets = twitToRetweet.getUserReTweets();
-
-        userReTweets.removeIf(u -> u.getUserRetweetId().equals(userSource.getId()));
-        userSource.getTwits().removeIf(u -> u.getId().equals(twitToUnRetweet.get().getId()));
+        Optional<Twit> optionalRetweet = twitToRetweet.retweetOrUnretweet(twitCount, userSource);
+        optionalRetweet.ifPresent(retweet -> {
+            userSource.twit(retweet);
+            twitCount++;
+        });
     }
 
 
