@@ -14,8 +14,10 @@ public class Twit {
     private final Long twitOwnerUserId;
     private String content;
     private final LocalDateTime creationDate;
-    private List<UserLike> userLikes;
-    private List<UserReTweet> userReTweets;
+    private final List<UserLike> userLikes;
+    private final List<UserReTweet> userReTweets;
+
+    private Twit originalTwit;
 
     public Twit(Long id, Long userId, String content) {
         final boolean isATwitWithInsult = isATwitWithInsult(content);
@@ -29,16 +31,18 @@ public class Twit {
         this.creationDate = LocalDateTime.now();
         this.userLikes = new ArrayList<>();
         this.userReTweets = new ArrayList<>();
+        this.originalTwit = null;
     }
 
     public Twit(Long id, Long twitOwnerUserId, String content,
-                LocalDateTime creationDate, List<UserLike> userLikes, List<UserReTweet> userRetweets){
+                LocalDateTime creationDate, List<UserLike> userLikes, List<UserReTweet> userRetweets, Twit originalTwit){
         this.id = id;
         this.twitOwnerUserId = twitOwnerUserId;
         this.content = content;
         this.creationDate = creationDate;
         this.userLikes = userLikes;
         this.userReTweets = userRetweets;
+        this.originalTwit = originalTwit;
     }
 
     private boolean isATwitWithInsult(String twitContent) {
@@ -122,15 +126,18 @@ public class Twit {
 
     private Optional<Twit> unRetweet(User userSource) {
         userReTweets.removeIf(ur -> Objects.equals(ur.getUserRetweetId(), userSource.getId()));
+        userSource.getTwits().removeIf(t -> Objects.equals(t.originalTwit.id, id));
         return Optional.empty();
     }
 
     private Optional<Twit> retweet(Long twitCount, User userSource) {
         Twit twitRetweeted = new Twit(twitCount, twitOwnerUserId, content,
-                creationDate, userLikes, userReTweets);
+                creationDate, userLikes, userReTweets, this);
         userReTweets.add(new UserReTweet(userSource.getId()));
         return Optional.of(twitRetweeted);
     }
 
-
+    public Twit getOriginalTwit() {
+        return originalTwit;
+    }
 }
