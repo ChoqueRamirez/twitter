@@ -17,7 +17,7 @@ public class Twit {
     private final List<UserLike> userLikes;
     private final List<UserReTweet> userReTweets;
 
-    private Twit originalTwit;
+    private final Twit originalTwit;
 
     public Twit(Long id, Long userId, String content) {
         final boolean isATwitWithInsult = isATwitWithInsult(content);
