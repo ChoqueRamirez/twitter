@@ -119,7 +119,6 @@ public class Twit {
         List<UserReTweet> retweetList = userReTweets;
 
         boolean isAUserRetweetInTheTwit = retweetList.stream().anyMatch(tul -> tul.getUserRetweetId().equals(userSource.getId()));
-
         if (!isAUserRetweetInTheTwit){
             return retweet(twitCount ,twitToRetweet);
         }else if(!userSource.getId().equals(twitToRetweet.getTwitOwnerUserId())) {

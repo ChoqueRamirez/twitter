@@ -57,34 +57,38 @@ public class TwitService {
 
     public void retweet(Long sourceUserId, RetweetDTO requestRT) {
         User userSource = twitRepository.getUser(sourceUserId);
-
         User targetUser = twitRepository.getUser(requestRT.getTargetUserId());
-
         Twit twitToRetweet = targetUser.giveMeTheTwit(requestRT.getTargetTwitId());
 
         Optional<Twit> optionalRetweet = twitToRetweet.retweetRequest(twitCount, userSource, targetUser, twitToRetweet.getId());
 
         if (optionalRetweet.isPresent()){
-            List<Twit> userTwits = userSource.getTwits();
-            List<UserReTweet> userReTweets = twitToRetweet.getUserReTweets();
-
-            userReTweets.add(new UserReTweet(userSource.getId()));
-            userTwits.add(optionalRetweet.get());
-            twitCount++;
-
+            doTheRetweet(userSource, twitToRetweet, optionalRetweet);
         }else{
-            Optional<Twit> twitToUnRetweet =  userSource.getTwits().stream().filter(t -> t.getContent().equals(twitToRetweet.getContent()))
-                    .filter(t -> t.getCreationDate().equals(twitToRetweet.getCreationDate()))
-                    .filter(t -> t.getTwitOwnerUserId().equals(twitToRetweet.getTwitOwnerUserId()))
-                    .findFirst();
-
-            List<UserReTweet> userReTweets = twitToRetweet.getUserReTweets();
-
-            userReTweets.removeIf(u -> u.getUserRetweetId().equals(userSource.getId()));
-            userSource.getTwits().removeIf(u -> u.getId().equals(twitToUnRetweet.get().getId()));
+            undoTheRetweet(userSource, twitToRetweet);
         }
-
-
-
     }
+
+    private void doTheRetweet(User userSource, Twit twitToRetweet, Optional<Twit> optionalRetweet) {
+        List<Twit> userTwits = userSource.getTwits();
+        List<UserReTweet> userReTweets = twitToRetweet.getUserReTweets();
+
+        userReTweets.add(new UserReTweet(userSource.getId()));
+        userTwits.add(optionalRetweet.get());
+        twitCount++;
+    }
+
+    private void undoTheRetweet(User userSource, Twit twitToRetweet) {
+        Optional<Twit> twitToUnRetweet =  userSource.getTwits().stream().filter(t -> t.getContent().equals(twitToRetweet.getContent()))
+                .filter(t -> t.getCreationDate().equals(twitToRetweet.getCreationDate()))
+                .filter(t -> t.getTwitOwnerUserId().equals(twitToRetweet.getTwitOwnerUserId()))
+                .findFirst();
+
+        List<UserReTweet> userReTweets = twitToRetweet.getUserReTweets();
+
+        userReTweets.removeIf(u -> u.getUserRetweetId().equals(userSource.getId()));
+        userSource.getTwits().removeIf(u -> u.getId().equals(twitToUnRetweet.get().getId()));
+    }
+
+
 }
