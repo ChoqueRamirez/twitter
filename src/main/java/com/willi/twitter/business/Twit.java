@@ -120,7 +120,6 @@ public class Twit {
 
         boolean isAUserRetweetInTheTwit = retweetList.stream().anyMatch(tul -> tul.getUserRetweetId().equals(userSource.getId()));
 
-
         if (!isAUserRetweetInTheTwit){
             return retweet(twitCount ,twitToRetweet);
         }else if(!userSource.getId().equals(twitToRetweet.getTwitOwnerUserId())) {
@@ -132,7 +131,6 @@ public class Twit {
     private Optional<Twit> retweet(Long twitCount, Twit twitToRetweet) {
         Twit twitRetweeted = new Twit(twitCount, twitToRetweet.getTwitOwnerUserId(), twitToRetweet.getContent(),
                 twitToRetweet.getCreationDate(), twitToRetweet.getUserLikes(), twitToRetweet.getUserReTweets());
-
         return Optional.of(twitRetweeted);
     }
 

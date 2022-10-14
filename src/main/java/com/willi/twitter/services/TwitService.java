@@ -70,9 +70,9 @@ public class TwitService {
 
             userReTweets.add(new UserReTweet(userSource.getId()));
             userTwits.add(optionalRetweet.get());
+            twitCount++;
 
         }else{
-
             Optional<Twit> twitToUnRetweet =  userSource.getTwits().stream().filter(t -> t.getContent().equals(twitToRetweet.getContent()))
                     .filter(t -> t.getCreationDate().equals(twitToRetweet.getCreationDate()))
                     .filter(t -> t.getTwitOwnerUserId().equals(twitToRetweet.getTwitOwnerUserId()))
@@ -84,7 +84,7 @@ public class TwitService {
             userSource.getTwits().removeIf(u -> u.getId().equals(twitToUnRetweet.get().getId()));
         }
 
-        twitCount++;
+
 
     }
 }
