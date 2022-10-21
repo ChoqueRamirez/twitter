@@ -93,7 +93,7 @@ public class Twit {
 
     public void likeDislike(User user){
 
-        boolean isAUserLikeInTheTwit = userLikes.stream().anyMatch(tul -> tul.getUserLikeId().equals(user.getId()));
+        boolean isAUserLikeInTheTwit = userLikes.stream().anyMatch(ul -> ul.getUserLike().equals(user));
 
         if (!isAUserLikeInTheTwit){
             like(user);
@@ -103,12 +103,11 @@ public class Twit {
     }
 
     private void like(User userLike){
-        Long userLikeId = userLike.getId();
-        userLikes.add(new UserLike(userLike.getId()));
+        userLikes.add(new UserLike(userLike));
     }
 
     private void dislike(User userLike){
-        userLikes.removeIf(u -> u.getUserLikeId().equals(userLike.getId()));
+        userLikes.removeIf(u -> u.getUserLike().equals(userLike));
     }
 
 

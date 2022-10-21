@@ -3,23 +3,23 @@ package com.willi.twitter.business;
 import java.time.LocalDateTime;
 
 public class UserLike {
-    private Long userLikeId;
+    private User userLike;
     private final LocalDateTime likeDate;
 
-    public UserLike(Long userLikeId) {
-        this.userLikeId = userLikeId;
+    public UserLike(User userLike) {
         this.likeDate = LocalDateTime.now();
-    }
-
-    public Long getUserLikeId() {
-        return userLikeId;
-    }
-
-    public void setUserLikeId(Long userLikeId) {
-        this.userLikeId = userLikeId;
+        this.userLike = userLike;
     }
 
     public LocalDateTime getLikeDate() {
         return likeDate;
+    }
+
+    public User getUserLike() {
+        return userLike;
+    }
+
+    public void setUserLike(User userLike) {
+        this.userLike = userLike;
     }
 }
