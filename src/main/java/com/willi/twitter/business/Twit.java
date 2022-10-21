@@ -87,10 +87,6 @@ public class Twit {
         return twitOwnerUserId;
     }
 
-    public Integer calculateLength(){
-        return content.length();
-    }
-
     public void likeDislike(User user){
 
         boolean isAUserLikeInTheTwit = userLikes.stream().anyMatch(ul -> ul.getUserLike().equals(user));

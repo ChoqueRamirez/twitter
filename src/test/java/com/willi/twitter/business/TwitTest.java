@@ -134,4 +134,36 @@ public class TwitTest {
         twit.retweetOrUnretweet(3L, williwonkis);
         Assertions.assertEquals(Long.valueOf(1), twit.getRetweets());
     }
+
+    @Test
+    public void whenRetweenARetweet(){
+        Twit twit = new Twit(
+                1L,
+                1L, "Aguante Bokita"
+        );
+        User gerito = new User(
+                1L,
+                "gerito@gmail.com",
+                "1234"
+        );
+        gerito.twit(twit);
+        User williwonkis = new User(
+                2L,
+                "willi@gmail.com",
+                "2345"
+        );
+        Optional<Twit> retweetOptional = twit.retweetOrUnretweet(1L, williwonkis);
+        Twit retweet = retweetOptional.get();
+        williwonkis.twit(retweet);
+        User centu = new User(
+                3L,
+                "centu@gmail.com",
+                "23456"
+        );
+        Optional<Twit> retweetOfRetweet = retweet.retweetOrUnretweet(2L, centu);
+        centu.twit(retweetOfRetweet.get());
+
+        Assertions.assertEquals(2, twit.getRetweets());
+
+    }
 }
