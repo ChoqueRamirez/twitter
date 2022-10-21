@@ -119,7 +119,14 @@ public class Twit {
 
     private Optional<Twit> unRetweet(User userSource) {
         userReTweets.removeIf(ur -> Objects.equals(ur.getId(), userSource.getId()));
-        userSource.getTwits().removeIf(t -> Objects.equals(t.originalTwit.id, id));
+        if(this.originalTwit != null){
+            // Si no es el original
+            userSource.getTwits().removeIf(t -> Objects.equals(t.originalTwit.id, id));
+        } else {
+            // Si es el original
+            userSource.getTwits().removeIf(ut -> Objects.nonNull(ut.originalTwit)
+                    && Objects.equals(ut.originalTwit.id, id));
+        }
         return Optional.empty();
     }
 
