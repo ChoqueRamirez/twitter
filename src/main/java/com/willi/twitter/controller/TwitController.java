@@ -1,5 +1,6 @@
 package com.willi.twitter.controller;
 
+import com.willi.twitter.dto.DeleteDTO;
 import com.willi.twitter.business.Twit;
 import com.willi.twitter.dto.*;
 import com.willi.twitter.services.TwitService;
@@ -63,6 +64,13 @@ public class TwitController {
     @PostMapping("/user/{sourceUserId}/twits/retweet")
     public ResponseEntity<?> retweet(@PathVariable Long sourceUserId, @RequestBody RetweetDTO targetRetweet){
         twitService.retweet(sourceUserId, targetRetweet);
+        return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping("/user/{userId}/twits/delete")
+    public ResponseEntity<?> deleteTwit(@RequestBody DeleteDTO twitToDelete, @PathVariable Long userId){
+        twitService.deleteTwit(userId, twitToDelete);
+
         return ResponseEntity.ok().build();
     }
 

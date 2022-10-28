@@ -2,6 +2,7 @@ package com.willi.twitter.services;
 
 import com.willi.twitter.business.Twit;
 import com.willi.twitter.business.User;
+import com.willi.twitter.dto.DeleteDTO;
 import com.willi.twitter.dto.RetweetDTO;
 import com.willi.twitter.dto.TwitterCreationDTO;
 import com.willi.twitter.dto.UserLikeDTO;
@@ -67,4 +68,11 @@ public class TwitService {
     }
 
 
+    public void deleteTwit(Long userId, DeleteDTO twitToDelete) {
+        User user = twitRepository.getUser(userId);
+        Twit twit = user.giveMeTheTwit(twitToDelete.getTargetTwitId());
+
+        user.deleteTwit(twit);
+
+    }
 }
