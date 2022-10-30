@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.xml.ws.Response;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -63,6 +64,12 @@ public class TwitController {
     @PostMapping("/user/{sourceUserId}/twits/retweet")
     public ResponseEntity<?> retweet(@PathVariable Long sourceUserId, @RequestBody RetweetDTO targetRetweet){
         twitService.retweet(sourceUserId, targetRetweet);
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/twit/btc")
+    public ResponseEntity<?> generateBTCTwit(){
+        twitService.generateBTCTwit();
         return ResponseEntity.ok().build();
     }
 

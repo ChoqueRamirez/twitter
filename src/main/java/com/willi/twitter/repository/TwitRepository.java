@@ -1,6 +1,7 @@
 package com.willi.twitter.repository;
 
 import com.willi.twitter.business.User;
+import com.willi.twitter.services.TwitService;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
@@ -13,7 +14,8 @@ public class TwitRepository {
             new User(1L, "cortigeronimo@gmail.com", "1234"),
             new User(2L, "willi@gmail.com", "4321"),
             new User(3L, "fedecentu@gmail.com", "asdasd"),
-            new User(4L, "camarita@gmail.com", "zxczxc")
+            new User(4L, "camarita@gmail.com", "zxczxc"),
+            new User(TwitService.USER_ID, "bot@bot.com", "1234")
     );
 
     public User getUser(Long userId) {
