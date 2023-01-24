@@ -1,8 +1,12 @@
 package com.willi.twitter.client;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class PriceResponseDTO {
     private String code;
-    private Double rate_float;
+    @JsonProperty("rate_float")
+    private Double rateFloat;
+    private String description;
 
     public String getCode() {
         return code;
@@ -12,11 +16,19 @@ public class PriceResponseDTO {
         this.code = code;
     }
 
-    public Double getRate_float() {
-        return rate_float;
+    public Double getRateFloat() {
+        return rateFloat;
     }
 
-    public void setRate_float(Double rate_float) {
-        this.rate_float = rate_float;
+    public void setRateFloat(Double rateFloat) {
+        this.rateFloat = rateFloat;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

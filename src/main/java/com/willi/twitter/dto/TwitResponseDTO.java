@@ -14,7 +14,9 @@ public class TwitResponseDTO {
     public List<UserLikeResponseDTO> userLikesResponse;
 
 
-    public TwitResponseDTO(Long id, Long twitOwnerUserId, String content, LocalDate creationDate, Long amountLikes, Long retweets, List<UserLikeResponseDTO> userLikesResponse) {
+    public TwitResponseDTO(Long id, Long twitOwnerUserId, String content,
+                           LocalDate creationDate, Long amountLikes, Long retweets,
+                           List<UserLikeResponseDTO> userLikesResponse) {
         this.id = id;
         this.twitOwnerUserId = twitOwnerUserId;
         this.content = content;

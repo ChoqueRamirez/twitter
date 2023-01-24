@@ -87,6 +87,10 @@ public class Twit {
         return twitOwnerUserId;
     }
 
+    public Twit getOriginalTwit() {
+        return originalTwit;
+    }
+
     public void likeDislike(User user){
 
         boolean isAUserLikeInTheTwit = userLikes.stream().anyMatch(ul -> ul.getUserLike().equals(user));
@@ -137,7 +141,5 @@ public class Twit {
         return Optional.of(twitRetweeted);
     }
 
-    public Twit getOriginalTwit() {
-        return originalTwit;
-    }
+
 }
