@@ -6,7 +6,6 @@ public class PriceResponseDTO {
     private String code;
     @JsonProperty("rate_float")
     private Double rateFloat;
-    private String description;
 
     public String getCode() {
         return code;
@@ -22,13 +21,5 @@ public class PriceResponseDTO {
 
     public void setRateFloat(Double rateFloat) {
         this.rateFloat = rateFloat;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 }

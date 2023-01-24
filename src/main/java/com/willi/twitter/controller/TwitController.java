@@ -67,8 +67,8 @@ public class TwitController {
     }
 
     @PostMapping("/user/{sourceUserId}/twits/retweet")
-    public ResponseEntity<?> retweet(@PathVariable Long sourceUserId, @RequestBody RetweetDTO targetRetweet){
-        twitService.retweet(sourceUserId, targetRetweet);
+    public ResponseEntity<?> retweet(@PathVariable Long retweetingUserId, @RequestBody RetweetDTO targetRetweet){
+        twitService.retweet(retweetingUserId, targetRetweet);
         return ResponseEntity.ok().build();
     }
 
@@ -78,7 +78,7 @@ public class TwitController {
         return ResponseEntity.ok().build();
     }
 
-    @DeleteMapping("/user/{userId}/twits/delete")
+    @DeleteMapping("/user/{userId}/twits")
     public ResponseEntity<?> deleteTwit(@RequestBody DeleteDTO twitToDelete, @PathVariable Long userId){
         twitService.deleteTwit(userId, twitToDelete);
         return ResponseEntity.ok().build();

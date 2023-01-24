@@ -34,7 +34,7 @@ public class User {
         return twits;
     }
 
-    public void twit(Twit twit) {
+    public void makeATwit(Twit twit) {
         twits.add(twit);
     }
 

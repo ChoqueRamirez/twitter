@@ -40,7 +40,7 @@ public class TwitService {
         User user = twitRepository.getUser(userId);
 
         Twit twit = new Twit(twitCount, userId, request.getTwit());
-        user.twit(twit);
+        user.makeATwit(twit);
 
         twitCount++;
     }
@@ -70,7 +70,7 @@ public class TwitService {
 
         Optional<Twit> optionalRetweet = twitToRetweet.retweetOrUnretweet(twitCount, userSource);
         optionalRetweet.ifPresent(retweet -> {
-            userSource.twit(retweet);
+            userSource.makeATwit(retweet);
             twitCount++;
         });
     }
@@ -85,7 +85,7 @@ public class TwitService {
                 userSource.getId(),
                 String.format("El precio del día %s es %s", LocalDate.now(), btcPrice)
         );
-        userSource.twit(twit);
+        userSource.makeATwit(twit);
         twitCount++;
     }
 

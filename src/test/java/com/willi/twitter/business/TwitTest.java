@@ -146,7 +146,7 @@ public class TwitTest {
                 "gerito@gmail.com",
                 "1234"
         );
-        gerito.twit(twit);
+        gerito.makeATwit(twit);
         User williwonkis = new User(
                 2L,
                 "willi@gmail.com",
@@ -154,14 +154,14 @@ public class TwitTest {
         );
         Optional<Twit> retweetOptional = twit.retweetOrUnretweet(1L, williwonkis);
         Twit retweet = retweetOptional.get();
-        williwonkis.twit(retweet);
+        williwonkis.makeATwit(retweet);
         User centu = new User(
                 3L,
                 "centu@gmail.com",
                 "23456"
         );
         Optional<Twit> retweetOfRetweet = retweet.retweetOrUnretweet(2L, centu);
-        centu.twit(retweetOfRetweet.get());
+        centu.makeATwit(retweetOfRetweet.get());
 
         Assertions.assertEquals(2, twit.getRetweets());
 
