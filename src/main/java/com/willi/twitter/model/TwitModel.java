@@ -13,7 +13,7 @@ public class TwitModel {
     @Column(nullable = false)
     public String content;
 
-    public LocalDateTime creationDate;
+    public LocalDateTime creationAt;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
@@ -44,12 +44,12 @@ public class TwitModel {
         this.content = content;
     }
 
-    public LocalDateTime getCreationDate() {
-        return creationDate;
+    public LocalDateTime getCreationAt() {
+        return creationAt;
     }
 
-    public void setCreationDate(LocalDateTime creationDate) {
-        this.creationDate = creationDate;
+    public void setCreationAt(LocalDateTime creationAt) {
+        this.creationAt = creationAt;
     }
 
     public UserModel getUser() {
