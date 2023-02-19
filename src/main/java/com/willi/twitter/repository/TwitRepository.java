@@ -1,27 +1,15 @@
 package com.willi.twitter.repository;
 
 import com.willi.twitter.business.User;
+import com.willi.twitter.model.TwitModel;
 import com.willi.twitter.services.TwitService;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
 import java.util.List;
 
 @Component
-public class TwitRepository {
+public interface TwitRepository extends JpaRepository<TwitModel, Long> {
 
-    private final static List<User> users = Arrays.asList(
-            new User(1L, "cortigeronimo@gmail.com", "1234"),
-            new User(2L, "willi@gmail.com", "4321"),
-            new User(3L, "fedecentu@gmail.com", "asdasd"),
-            new User(4L, "camarita@gmail.com", "zxczxc"),
-            new User(TwitService.USER_ID, "bot@bot.com", "1234")
-    );
-
-    public User getUser(Long userId) {
-        return users.stream()
-                .filter(u -> u.getId().equals(userId))
-                .findFirst()
-                .orElseThrow(RuntimeException::new);
-    }
 }

@@ -1,6 +1,7 @@
 package com.willi.twitter.model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class UserModel {
@@ -8,10 +9,9 @@ public class UserModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String nombre;
+    private String name;
 
-    private String apellido;
-
+    @Column(unique = true)
     private String email;
 
     private String password;
@@ -19,12 +19,22 @@ public class UserModel {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<TwitModel> twits;
 
-    public UserModel(Long id, String nombre, String apellido, String email, String password) {
+
+    public UserModel(Long id, String name, String email, String password) {
         this.id = id;
-        this.nombre = nombre;
-        this.apellido = apellido;
+        this.name = name;
         this.email = email;
         this.password = password;
+    }
+
+    public UserModel(String name, String email, String password){
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.twits = new ArrayList<>();
+    }
+
+    public UserModel() {
     }
 
     public Long getId() {
@@ -35,20 +45,12 @@ public class UserModel {
         this.id = id;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getName() {
+        return name;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getApellido() {
-        return apellido;
-    }
-
-    public void setApellido(String apellido) {
-        this.apellido = apellido;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getEmail() {

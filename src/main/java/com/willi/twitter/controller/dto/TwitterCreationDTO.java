@@ -1,4 +1,4 @@
-package com.willi.twitter.dto;
+package com.willi.twitter.controller.dto;
 
 public class TwitterCreationDTO {
     private String twit;

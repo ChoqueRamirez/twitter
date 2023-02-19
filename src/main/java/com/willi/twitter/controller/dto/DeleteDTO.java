@@ -1,4 +1,4 @@
-package com.willi.twitter.dto;
+package com.willi.twitter.controller.dto;
 
 public class DeleteDTO {
     private Long targetTwitId;

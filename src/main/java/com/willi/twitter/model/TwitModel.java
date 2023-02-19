@@ -15,15 +15,9 @@ public class TwitModel {
 
     public LocalDateTime creationDate;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "user_id", nullable = false)
     private UserModel user;
-
-    @OneToMany(mappedBy = "twit", cascade = CascadeType.ALL)
-    private List<TwitModel> likes;
-
-    @OneToMany(mappedBy = "twit", cascade = CascadeType.ALL)
-    private List<RetweetModel> retweets;
 
     private boolean isOriginal;
 
@@ -58,22 +52,6 @@ public class TwitModel {
 
     public void setUser(UserModel user) {
         this.user = user;
-    }
-
-    public List<TwitModel> getLikes() {
-        return likes;
-    }
-
-    public void setLikes(List<TwitModel> likes) {
-        this.likes = likes;
-    }
-
-    public List<RetweetModel> getRetweets() {
-        return retweets;
-    }
-
-    public void setRetweets(List<RetweetModel> retweets) {
-        this.retweets = retweets;
     }
 
     public boolean isOriginal() {

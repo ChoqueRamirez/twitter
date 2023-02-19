@@ -1,14 +1,12 @@
 package com.willi.twitter.controller;
 
-import com.willi.twitter.dto.DeleteDTO;
+import com.willi.twitter.controller.dto.*;
 import com.willi.twitter.business.Twit;
-import com.willi.twitter.dto.*;
 import com.willi.twitter.services.TwitService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.xml.ws.Response;
 import java.util.List;
 import java.util.stream.Collectors;
 

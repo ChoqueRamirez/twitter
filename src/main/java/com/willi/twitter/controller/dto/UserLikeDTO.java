@@ -1,4 +1,4 @@
-package com.willi.twitter.dto;
+package com.willi.twitter.controller.dto;
 
 public class UserLikeDTO {
     private Long userLikeId;
