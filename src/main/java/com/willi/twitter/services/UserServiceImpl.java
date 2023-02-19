@@ -1,5 +1,6 @@
 package com.willi.twitter.services;
 
+import com.willi.twitter.business.UserBusiness;
 import com.willi.twitter.model.UserModel;
 import com.willi.twitter.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,17 +9,21 @@ import java.util.Optional;
 
 public class UserServiceImpl implements IUserService{
 
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
+    private final UserBusiness userBusiness;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository){
+    public UserServiceImpl(UserRepository userRepository, UserBusiness userBusiness){
         this.userRepository = userRepository;
+        this.userBusiness = userBusiness;
     }
 
     @Override
     public Optional<UserModel> saveUser(UserModel user){
-
-        return Optional.of(userRepository.save(user));
+        if(!userBusiness.doesTheUserNameAlreadyExist(user)) {
+            return Optional.of(userRepository.save(user));
+        }
+        return Optional.empty();
     }
 
     @Override
