@@ -5,12 +5,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "User")
+@Table(name = "user")
 public class UserModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(unique = true)
     private String name;
 
     @Column(unique = true)
@@ -19,7 +20,7 @@ public class UserModel {
     private String password;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<TwitModel> twits;
+    private List<TweetModel> tweets;
 
 
     public UserModel(Long id, String name, String email, String password) {
@@ -33,7 +34,7 @@ public class UserModel {
         this.name = name;
         this.email = email;
         this.password = password;
-        this.twits = new ArrayList<>();
+        this.tweets = new ArrayList<>();
     }
 
     public UserModel() {
@@ -71,11 +72,11 @@ public class UserModel {
         this.password = password;
     }
 
-    public List<TwitModel> getTwits() {
-        return twits;
+    public List<TweetModel> getTweets() {
+        return tweets;
     }
 
-    public void setTwits(List<TwitModel> twits) {
-        this.twits = twits;
+    public void setTweets(List<TweetModel> tweets) {
+        this.tweets = tweets;
     }
 }

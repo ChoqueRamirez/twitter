@@ -33,9 +33,9 @@ public class UserController {
     public ResponseEntity<UserResponseDTO> registerUser(@RequestBody UserCreationDTO userCreation) {
         try {
             UserModel user = userMapper.toUserModel(userCreation);
-            Optional<UserModel> userSaved = userService.saveUser(user);
-            if (userSaved.isPresent()) {
-                UserResponseDTO userResponse = userMapper.toUserResponse(userSaved.get());
+            UserModel userSaved = userService.saveUser(user);
+            if (userSaved != null) {
+                UserResponseDTO userResponse = userMapper.toUserResponse(userSaved);
                 return ResponseEntity.status(HttpStatus.CREATED).body(userResponse);
             } else {
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();

@@ -2,18 +2,18 @@ package com.willi.twitter.model;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
-public class TwitModel {
+@Table(name = "tweet")
+public class TweetModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false)
-    public String content;
+    private String content;
 
-    public LocalDateTime creationDate;
+    private LocalDateTime creationDate;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "user_id", nullable = false)
@@ -21,6 +21,16 @@ public class TwitModel {
 
     private boolean isOriginal;
 
+    public TweetModel(Long id, String content, LocalDateTime creationDate, UserModel user, boolean isOriginal) {
+        this.id = id;
+        this.content = content;
+        this.creationDate = creationDate;
+        this.user = user;
+        this.isOriginal = isOriginal;
+    }
+
+    public TweetModel(){
+    }
 
     public Long getId() {
         return id;

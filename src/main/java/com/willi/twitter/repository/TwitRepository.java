@@ -1,10 +1,10 @@
 package com.willi.twitter.repository;
 
-import com.willi.twitter.model.TwitModel;
+import com.willi.twitter.model.TweetModel;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
-@Component
-public interface TwitRepository extends JpaRepository<TwitModel, Long> {
+@Repository
+public interface TwitRepository extends JpaRepository<TweetModel, Long> {
 
 }
