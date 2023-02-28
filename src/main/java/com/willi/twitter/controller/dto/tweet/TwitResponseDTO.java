@@ -1,4 +1,6 @@
-package com.willi.twitter.controller.dto;
+package com.willi.twitter.controller.dto.tweet;
+
+import com.willi.twitter.controller.dto.user.UserLikeResponseDTO;
 
 import java.time.LocalDate;
 import java.util.List;

@@ -1,7 +1,8 @@
 package com.willi.twitter.controller;
 
-import com.willi.twitter.controller.dto.UserCreationDTO;
-import com.willi.twitter.controller.dto.UserResponseDTO;
+import com.willi.twitter.controller.dto.error.ErrorDetailsDTO;
+import com.willi.twitter.controller.dto.user.UserCreationDTO;
+import com.willi.twitter.controller.dto.user.UserResponseDTO;
 import com.willi.twitter.controller.exeption.UserNameAlreadyExistExeption;
 import com.willi.twitter.mappers.UserMapper;
 import com.willi.twitter.model.UserModel;
@@ -9,10 +10,7 @@ import com.willi.twitter.services.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
@@ -45,4 +43,13 @@ public class UserController {
         }
     }
 
+    @GetMapping("/{userId}")
+    public ResponseEntity<?> getUser(@PathVariable Long userId){
+        Optional<UserModel> user = userService.getUserById(userId);
+        if(user.isEmpty()){
+            ErrorDetailsDTO errorDetailsDTO = new ErrorDetailsDTO("User not found with ID: " + userId, HttpStatus.NOT_FOUND);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorDetailsDTO);
+        }
+        return ResponseEntity.ok(userMapper.toUserResponse(user.get()));
+    }
 }

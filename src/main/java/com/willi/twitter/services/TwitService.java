@@ -3,10 +3,10 @@
 //import com.willi.twitter.business.Twit;
 //import com.willi.twitter.business.User;
 //import com.willi.twitter.client.BTCClient;
-//import com.willi.twitter.controller.dto.DeleteDTO;
-//import com.willi.twitter.controller.dto.RetweetDTO;
-//import com.willi.twitter.controller.dto.TwitterCreationDTO;
-//import com.willi.twitter.controller.dto.UserLikeDTO;
+//import com.willi.twitter.controller.dto.tweet.DeleteDTO;
+//import com.willi.twitter.controller.dto.tweet.RetweetDTO;
+//import com.willi.twitter.controller.dto.tweet.TwitterCreationDTO;
+//import com.willi.twitter.controller.dto.user.UserLikeDTO;
 //import com.willi.twitter.repository.TwitRepository;
 //import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.stereotype.Service;

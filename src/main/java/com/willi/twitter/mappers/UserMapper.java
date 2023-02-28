@@ -1,9 +1,8 @@
 package com.willi.twitter.mappers;
 
-import com.willi.twitter.controller.dto.UserCreationDTO;
-import com.willi.twitter.controller.dto.UserResponseDTO;
+import com.willi.twitter.controller.dto.user.UserCreationDTO;
+import com.willi.twitter.controller.dto.user.UserResponseDTO;
 import com.willi.twitter.model.UserModel;
-import org.apache.tomcat.jni.User;
 import org.springframework.stereotype.Component;
 
 @Component
