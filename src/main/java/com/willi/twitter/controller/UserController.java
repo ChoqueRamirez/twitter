@@ -1,7 +1,7 @@
 package com.willi.twitter.controller;
 
 import com.willi.twitter.controller.dto.error.ErrorDetailsDTO;
-import com.willi.twitter.controller.dto.user.UserCreationDTO;
+import com.willi.twitter.controller.dto.user.UserRequestDTO;
 import com.willi.twitter.controller.dto.user.UserResponseDTO;
 import com.willi.twitter.controller.exeption.UserNameAlreadyExistExeption;
 import com.willi.twitter.mappers.UserMapper;
@@ -28,7 +28,7 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<UserResponseDTO> registerUser(@RequestBody UserCreationDTO userCreation) {
+    public ResponseEntity<UserResponseDTO> registerUser(@RequestBody UserRequestDTO userCreation) {
         try {
             UserModel user = userMapper.toUserModel(userCreation);
             UserModel userSaved = userService.saveUser(user);
@@ -51,5 +51,18 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorDetailsDTO);
         }
         return ResponseEntity.ok(userMapper.toUserResponse(user.get()));
+    }
+
+    @PatchMapping("/{userId}")
+    public ResponseEntity<?> updateUser(@PathVariable Long userId, @RequestBody UserRequestDTO userRequest){
+        Optional<UserModel> user = userService.getUserById(userId);
+        if(user.isEmpty()){
+            ErrorDetailsDTO errorDetailsDTO = new ErrorDetailsDTO("User not found with ID: " + userId, HttpStatus.NOT_FOUND);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorDetailsDTO);
+        }
+
+        UserModel userUpdated = userService.updateUser(user.get(), userRequest);
+
+        return ResponseEntity.ok((userMapper.toUserResponse(userUpdated)));
     }
 }

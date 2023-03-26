@@ -1,6 +1,6 @@
 package com.willi.twitter.mappers;
 
-import com.willi.twitter.controller.dto.user.UserCreationDTO;
+import com.willi.twitter.controller.dto.user.UserRequestDTO;
 import com.willi.twitter.controller.dto.user.UserResponseDTO;
 import com.willi.twitter.model.UserModel;
 import org.springframework.stereotype.Component;
@@ -8,11 +8,11 @@ import org.springframework.stereotype.Component;
 @Component
 public class UserMapper {
 
-    public UserModel toUserModel(UserCreationDTO userCreationDTO){
+    public UserModel toUserModel(UserRequestDTO userRequestDTO){
         return new UserModel(
-                userCreationDTO.getName(),
-                userCreationDTO.getEmail(),
-                userCreationDTO.getPassword()
+                userRequestDTO.getName(),
+                userRequestDTO.getEmail(),
+                userRequestDTO.getPassword()
         );
     }
 

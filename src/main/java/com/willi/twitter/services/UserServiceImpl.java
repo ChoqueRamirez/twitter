@@ -1,7 +1,9 @@
 package com.willi.twitter.services;
 
 import com.willi.twitter.business.UserBusiness;
+import com.willi.twitter.controller.dto.user.UserRequestDTO;
 import com.willi.twitter.controller.exeption.UserNameAlreadyExistExeption;
+import com.willi.twitter.mappers.UserMapper;
 import com.willi.twitter.model.UserModel;
 import com.willi.twitter.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,25 +16,40 @@ public class UserServiceImpl implements IUserService{
 
     private final UserRepository userRepository1;
     private final UserBusiness userBusiness;
+    private final UserMapper userMapper1;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository1, UserBusiness userBusiness){
+    public UserServiceImpl(UserRepository userRepository1, UserBusiness userBusiness, UserMapper userMapper1){
         this.userRepository1 = userRepository1;
         this.userBusiness = userBusiness;
+        this.userMapper1 = userMapper1;
     }
 
     @Override
     public UserModel saveUser(UserModel user) throws UserNameAlreadyExistExeption {
-        if(!userBusiness.doesTheUserNameAlreadyExist(user)) {
+        if(userBusiness.canTheUserBeSaved(user)) {
             return userRepository1.save(user);
-        }else {
-            throw new UserNameAlreadyExistExeption("El nombre de usuario ya existe");
         }
+        return null;
     }
 
     @Override
     public Optional<UserModel> getUserById(Long id){
         return userRepository1.findById(id);
+    }
+
+    @Override
+    public UserModel updateUser(UserModel originalUser, UserRequestDTO userResquest) {
+        UserModel userRequest = userMapper1.toUserModel(userResquest);
+        if(userBusiness.canTheUserBeUpdated(originalUser, userRequest)){
+            originalUser.setName(userRequest.getName());
+            originalUser.setEmail(userRequest.getEmail());
+            originalUser.setPassword(userRequest.getPassword());
+
+            return userRepository1.save(originalUser);
+        }else {
+            return null;
+        }
     }
 
     @Override
