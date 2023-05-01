@@ -26,4 +26,10 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorDetailsDTO);
     }
 
+    @ExceptionHandler(UserNameAndEmailAlreadyExistException.class)
+    public ResponseEntity<?> hanldeUserNameAndEmailAlreadyExistException(UserNameAndEmailAlreadyExistException ex){
+        ErrorDetailsDTO errorDetailsDTO = new ErrorDetailsDTO("Conflict: " + ex.getMessage(), HttpStatus.CONFLICT);
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(errorDetailsDTO);
+    }
+
 }

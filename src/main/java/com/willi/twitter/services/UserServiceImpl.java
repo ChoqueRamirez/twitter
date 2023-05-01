@@ -41,7 +41,9 @@ public class UserServiceImpl implements IUserService{
     @Override
     public UserModel updateUser(UserModel originalUser, UserRequestDTO userResquest) {
         UserModel userRequest = userMapper1.toUserModel(userResquest);
-        if(userBusiness.canTheUserBeUpdated(originalUser, userRequest)){
+
+        boolean canTheUserBeUpdated = userBusiness.canTheUserBeUpdated(originalUser, userRequest);
+        if(canTheUserBeUpdated){
             originalUser.setName(userRequest.getName());
             originalUser.setEmail(userRequest.getEmail());
             originalUser.setPassword(userRequest.getPassword());

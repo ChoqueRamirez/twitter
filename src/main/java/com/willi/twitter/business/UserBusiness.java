@@ -2,6 +2,7 @@ package com.willi.twitter.business;
 
 import com.willi.twitter.exceptions.EmailAlreadyExistExeption;
 import com.willi.twitter.exceptions.UserNameAlreadyExistExeption;
+import com.willi.twitter.exceptions.UserNameAndEmailAlreadyExistException;
 import com.willi.twitter.model.UserModel;
 import com.willi.twitter.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,39 +19,66 @@ public class UserBusiness {
     }
 
     public boolean doesUserExist(UserModel user) {
-        return userRepository2.findById(user.getId()).isPresent();
+        return userRepository2.existsById(user.getId());
     }
 
-    public boolean doesTheUserNameAlreadyExist(UserModel user){
-        return userRepository2.findByName(user.getName()) != null;
+    private boolean doesTheUserNameAlreadyExist(UserModel user){
+        return userRepository2.existsByName(user.getName());
     }
 
-    public boolean doesTheEmailAlreadyExist(UserModel user){
-        return userRepository2.findByEmail(user.getEmail()) != null;
+    private boolean doesTheEmailAlreadyExist(UserModel user){
+        return userRepository2.existsByEmail(user.getEmail());
     }
 
-    public boolean canTheUserBeSaved(UserModel user){
-        if (doesTheUserNameAlreadyExist(user)){
-            throw new UserNameAlreadyExistExeption("El nombre de usuario ya existe");
-        } else if (doesTheEmailAlreadyExist(user)) {
+    private boolean areTheCredentialsOk(UserModel user){
+        boolean doesTheUserNameAlreadyExist = doesTheUserNameAlreadyExist(user);
+        boolean doesTheEmailAlreadyExist = doesTheEmailAlreadyExist(user);
+
+        if (doesTheUserNameAlreadyExist && doesTheEmailAlreadyExist){
+            throw new UserNameAndEmailAlreadyExistException("El nombre y el email ya estan en uso");
+        }else if (doesTheUserNameAlreadyExist){
+            throw new UserNameAlreadyExistExeption("El nombre ya existe");
+        }else if (doesTheEmailAlreadyExist){
             throw new EmailAlreadyExistExeption("El email ya existe");
+        }else {
+            return true;
         }
+    }
+
+
+    public boolean canTheUserBeSaved(UserModel user) {
+        return areTheCredentialsOk(user);
+    }
+
+
+    public boolean canTheUserBeUpdated(UserModel user, UserModel userRequest){
+        boolean isTryingToChangeTheName =  !userRequest.getName().equals(user.getName());
+        boolean isTryingToChangeTheEmail = !userRequest.getEmail().equals(user.getEmail());
+
+        boolean nameAndEmailOk = !doesTheUserNameAlreadyExist(userRequest) && !doesTheEmailAlreadyExist(userRequest);
+
+        if (isTryingToChangeTheName && isTryingToChangeTheEmail) {
+            if (!nameAndEmailOk) {
+                throw new UserNameAndEmailAlreadyExistException("El nombre y el email ya estan en uso");
+            }
+        }
+
+        if (isTryingToChangeTheName) {
+            if (doesTheUserNameAlreadyExist(userRequest)) {
+                throw new UserNameAlreadyExistExeption("el nombre ya esta en uso");
+            }
+        }
+
+        if (isTryingToChangeTheEmail) {
+            if (doesTheEmailAlreadyExist(userRequest)) {
+                throw new EmailAlreadyExistExeption("El email ya esta en uso");
+            }
+        }
+
+
         return true;
     }
 
-    public boolean canTheUserBeUpdated(UserModel user, UserModel userResquest){
-        boolean isTryingToChangeTheName =  !userResquest.getName().equals(user.getName());
-        boolean isTryingToChangeTheEmail = !userResquest.getEmail().equals(user.getEmail());
-        boolean isTryingToChangeThePassword = !userResquest.getPassword().equals(user.getPassword());
 
-        if (isTryingToChangeTheName && isTryingToChangeTheEmail){
-            return !doesTheUserNameAlreadyExist(userResquest) && !doesTheEmailAlreadyExist(userResquest);
-        }else if(isTryingToChangeTheName){
-            return !doesTheUserNameAlreadyExist(userResquest);
-        } else if (isTryingToChangeTheEmail) {
-            return !doesTheEmailAlreadyExist(userResquest);
-        }
-        return isTryingToChangeThePassword;
-    }
 
 }
