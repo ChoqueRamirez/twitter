@@ -1,8 +1,7 @@
 package com.willi.twitter.business;
 
-import com.willi.twitter.controller.dto.user.UserRequestDTO;
-import com.willi.twitter.controller.exeption.EmailAlreadyExistExeption;
-import com.willi.twitter.controller.exeption.UserNameAlreadyExistExeption;
+import com.willi.twitter.exceptions.EmailAlreadyExistExeption;
+import com.willi.twitter.exceptions.UserNameAlreadyExistExeption;
 import com.willi.twitter.model.UserModel;
 import com.willi.twitter.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;

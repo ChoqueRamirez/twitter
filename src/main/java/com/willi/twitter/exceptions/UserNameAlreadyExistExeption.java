@@ -1,4 +1,4 @@
-package com.willi.twitter.controller.exeption;
+package com.willi.twitter.exceptions;
 
 public class UserNameAlreadyExistExeption extends RuntimeException{
     public UserNameAlreadyExistExeption(String message){
