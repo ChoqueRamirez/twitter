@@ -29,8 +29,13 @@ public class TweetModel {
         this.isOriginal = isOriginal;
     }
 
-    public TweetModel(){
+    public TweetModel(String content, LocalDateTime creationDate, boolean isOriginal){
+        this.content = content;
+        this.creationDate = creationDate;
+        this.isOriginal = isOriginal;
     }
+
+    public TweetModel(){};
 
     public Long getId() {
         return id;

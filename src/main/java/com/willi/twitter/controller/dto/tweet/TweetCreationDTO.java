@@ -1,6 +1,6 @@
 package com.willi.twitter.controller.dto.tweet;
 
-public class TwitterCreationDTO {
+public class TweetCreationDTO {
     private String twit;
 
     public String getTwit() {

@@ -2,7 +2,6 @@ package com.willi.twitter.services;
 
 import com.willi.twitter.business.UserBusiness;
 import com.willi.twitter.controller.dto.user.UserRequestDTO;
-import com.willi.twitter.exceptions.UserNameAlreadyExistExeption;
 import com.willi.twitter.mappers.UserMapper;
 import com.willi.twitter.model.UserModel;
 import com.willi.twitter.repository.UserRepository;

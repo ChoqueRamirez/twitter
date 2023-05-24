@@ -4,7 +4,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class TwitServiceTest {
+public class TweetServiceTest {
 
     @Test
     public void retweet() {
