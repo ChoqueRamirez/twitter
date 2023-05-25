@@ -1,22 +1,22 @@
 package com.willi.twitter.controller.dto.tweet;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.willi.twitter.controller.dto.user.UserResponseDTO;
-
 import java.time.LocalDateTime;
 
 public class TweetResponseDTO {
-    public long id;
-    public String content;
-    public LocalDateTime createdAt;
-    public UserResponseDTO user;
-    public boolean isOriginalTweet;
+    private long id;
+    private String content;
+    private LocalDateTime creationDate;
+    private UserResponseDTO userOwner;
+    private boolean isOriginal;
 
-    public TweetResponseDTO(long id, String content, LocalDateTime createdAt, UserResponseDTO user, boolean isOriginalTweet) {
+    public TweetResponseDTO(long id, String content, LocalDateTime creationDate, UserResponseDTO userOwner, boolean isOriginal) {
         this.id = id;
         this.content = content;
-        this.createdAt = createdAt;
-        this.user = user;
-        this.isOriginalTweet = isOriginalTweet;
+        this.creationDate = creationDate;
+        this.userOwner = userOwner;
+        this.isOriginal = isOriginal;
     }
 
     public long getId() {
@@ -35,27 +35,27 @@ public class TweetResponseDTO {
         this.content = content;
     }
 
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
+    public LocalDateTime getCreationDate() {
+        return creationDate;
     }
 
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
+    public void setCreationDate(LocalDateTime creationDate) {
+        this.creationDate = creationDate;
     }
 
-    public UserResponseDTO getUser() {
-        return user;
+    public UserResponseDTO getUserOwner() {
+        return userOwner;
     }
 
-    public void setUser(UserResponseDTO user) {
-        this.user = user;
+    public void setUserOwner(UserResponseDTO userOwner) {
+        this.userOwner = userOwner;
     }
 
-    public boolean isOriginalTweet() {
-        return isOriginalTweet;
+    public boolean isOriginal() {
+        return isOriginal;
     }
 
-    public void setOriginalTweet(boolean originalTweet) {
-        isOriginalTweet = originalTweet;
+    public void setOriginal(boolean isOriginal) {
+        this.isOriginal = isOriginal;
     }
 }

@@ -19,7 +19,7 @@ public class UserModel {
 
     private String password;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "userOwner", cascade = CascadeType.ALL)
     private List<TweetModel> tweets;
 
 

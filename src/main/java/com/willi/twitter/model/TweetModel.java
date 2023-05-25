@@ -15,24 +15,22 @@ public class TweetModel {
 
     private LocalDateTime creationDate;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "user_id", nullable = false)
-    private UserModel user;
+    @ManyToOne
+    @JoinColumn(name = "user_owner_id", nullable = false)
+    private UserModel userOwner;
 
     private boolean isOriginal;
 
-    public TweetModel(Long id, String content, LocalDateTime creationDate, UserModel user, boolean isOriginal) {
+    public TweetModel(Long id, String content, LocalDateTime creationDate, UserModel userOwner, boolean isOriginal) {
         this.id = id;
         this.content = content;
         this.creationDate = creationDate;
-        this.user = user;
+        this.userOwner = userOwner;
         this.isOriginal = isOriginal;
     }
 
-    public TweetModel(String content, LocalDateTime creationDate, boolean isOriginal){
+    public TweetModel(String content){
         this.content = content;
-        this.creationDate = creationDate;
-        this.isOriginal = isOriginal;
     }
 
     public TweetModel(){};
@@ -61,20 +59,20 @@ public class TweetModel {
         this.creationDate = creationDate;
     }
 
-    public UserModel getUser() {
-        return user;
+    public UserModel getUserOwner() {
+        return userOwner;
     }
 
-    public void setUser(UserModel user) {
-        this.user = user;
+    public void setUserOwner(UserModel userOwner) {
+        this.userOwner = userOwner;
     }
 
     public boolean isOriginal() {
         return isOriginal;
     }
 
-    public void setOriginal(boolean original) {
-        isOriginal = original;
+    public void setOriginal(boolean isOriginal) {
+        this.isOriginal = isOriginal;
     }
 
 }

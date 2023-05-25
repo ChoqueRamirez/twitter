@@ -1,12 +1,7 @@
 package com.willi.twitter.services;
 
 import com.willi.twitter.business.TweetBusiness;
-import com.willi.twitter.business.Twit;
-import com.willi.twitter.business.User;
 import com.willi.twitter.client.BTCClient;
-import com.willi.twitter.controller.dto.tweet.DeleteDTO;
-import com.willi.twitter.controller.dto.tweet.RetweetDTO;
-import com.willi.twitter.controller.dto.user.UserLikeDTO;
 import com.willi.twitter.model.TweetModel;
 import com.willi.twitter.model.UserModel;
 import com.willi.twitter.repository.TweetRepository;
@@ -14,8 +9,7 @@ import com.willi.twitter.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.util.List;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
@@ -41,10 +35,15 @@ public class TweetService {
     public void createTwit(Long userId, TweetModel tweetToCreate){
         Optional<UserModel> user = userRepository.findById(userId);
         if (user.isPresent()){
-            tweetToCreate.setUser(user.get());
+            tweetToCreate.setUserOwner(user.get());
+            tweetToCreate.setCreationDate(LocalDateTime.now());
             tweetRepository.save(tweetToCreate);
         }
+    }
 
+    public TweetModel giveMeTheTweet(Long tweetId) {
+        Optional<TweetModel> tweet = tweetRepository.findById(tweetId);
+        return tweet.orElse(null);
     }
 
 //    public List<Twit> getTwits(Long userId){
