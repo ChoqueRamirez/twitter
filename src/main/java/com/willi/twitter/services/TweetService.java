@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -44,6 +45,11 @@ public class TweetService {
     public TweetModel giveMeTheTweet(Long tweetId) {
         Optional<TweetModel> tweet = tweetRepository.findById(tweetId);
         return tweet.orElse(null);
+    }
+
+    public List<TweetModel> getTweets(Long userId) {
+        List<TweetModel> tweets = tweetRepository.findByUserOwnerId(userId);
+        return tweets;
     }
 
 //    public List<Twit> getTwits(Long userId){

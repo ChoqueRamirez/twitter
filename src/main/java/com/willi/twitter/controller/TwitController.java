@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/users")
 public class TwitController {
@@ -55,7 +57,12 @@ public class TwitController {
         return ResponseEntity.ok(tweetResponse);
     }
 
-
+    @GetMapping("{userId}/tweets")
+    public ResponseEntity<?> getTweets(@PathVariable Long userId){
+        List<TweetModel> tweets = tweetService.getTweets(userId);
+        List<TweetResponseDTO> tweetResponses = tweetMapper.toTweetResponseList(tweets);
+        return ResponseEntity.ok(tweetResponses);
+    }
 
 //    @GetMapping("/user/{userId}/twits")
 //    public ResponseEntity<List<TwitResponseDTO>> getTwits(@PathVariable Long userId){
