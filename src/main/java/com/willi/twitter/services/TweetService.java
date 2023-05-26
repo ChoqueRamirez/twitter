@@ -2,6 +2,7 @@ package com.willi.twitter.services;
 
 import com.willi.twitter.business.TweetBusiness;
 import com.willi.twitter.client.BTCClient;
+import com.willi.twitter.exceptions.UnauthorizedAccessException;
 import com.willi.twitter.model.TweetModel;
 import com.willi.twitter.model.UserModel;
 import com.willi.twitter.repository.TweetRepository;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -48,8 +50,21 @@ public class TweetService {
     }
 
     public List<TweetModel> getTweets(Long userId) {
-        List<TweetModel> tweets = tweetRepository.findByUserOwnerId(userId);
-        return tweets;
+        return tweetRepository.findByUserOwnerId(userId);
+    }
+
+    public void deleteTweet(Long userId, Long tweetToDeletedId){
+        Optional<UserModel> user = userRepository.findById(userId);
+        Optional<TweetModel> tweetToDelete = tweetRepository.findById(tweetToDeletedId);
+
+        if (user.isPresent() && tweetToDelete.isPresent()){
+            if (Objects.equals(user.get().getId(), tweetToDelete.get().getUserOwner().getId())){
+                tweetRepository.deleteById(tweetToDeletedId);
+            }else {
+                throw new UnauthorizedAccessException("Se esta tratando de eliminar el tweet de otro usuario");
+            }
+        }
+
     }
 
 //    public List<Twit> getTwits(Long userId){

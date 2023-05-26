@@ -1,6 +1,7 @@
 package com.willi.twitter.controller;
 
 
+import com.willi.twitter.controller.dto.tweet.DeleteDTO;
 import com.willi.twitter.controller.dto.tweet.TweetResponseDTO;
 import com.willi.twitter.controller.dto.tweet.TweetCreationDTO;
 import com.willi.twitter.controller.dto.user.UserResponseDTO;
@@ -64,26 +65,13 @@ public class TwitController {
         return ResponseEntity.ok(tweetResponses);
     }
 
-//    @GetMapping("/user/{userId}/twits")
-//    public ResponseEntity<List<TwitResponseDTO>> getTwits(@PathVariable Long userId){
-//
-//        List<Twit> twits = tweetService.getTwits(userId);
-//
-//        List<TwitResponseDTO> twitsResponse = twits
-//                .stream()
-//                .map(t -> new TwitResponseDTO(
-//                        t.getId(), t.getTwitOwnerUserId(), t.getContent(),
-//                        t.getCreationDate().toLocalDate(), t.getAmountLikes(),
-//                        t.getRetweets(),
-//                        t.getUserLikes()
-//                                .stream()
-//                                .map(ul -> new UserLikeResponseDTO(ul.getUserLike().getId(), ul.getLikeDate().toLocalDate()))
-//                                .collect(Collectors.toList())
-//                ))
-//                .collect(Collectors.toList());
-//
-//        return ResponseEntity.ok(twitsResponse);
-//    }
+    @DeleteMapping("{userId}/tweets")
+    public ResponseEntity<?> deleteTweet(@PathVariable Long userId,@RequestBody DeleteDTO tweetTarget){
+        Long tweetToDeletedId = tweetTarget.getTargetTwitId();
+        tweetService.deleteTweet(userId, tweetToDeletedId);
+        return ResponseEntity.ok().build();
+    }
+
 //
 //    @PatchMapping("/user/{userId}/twits/{twitId}/like")
 //    public ResponseEntity<?> like(@PathVariable Long userId, @PathVariable Long twitId, @RequestBody UserLikeDTO userLikeTwit){

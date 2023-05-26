@@ -27,9 +27,14 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(UserNameAndEmailAlreadyExistException.class)
-    public ResponseEntity<?> hanldeUserNameAndEmailAlreadyExistException(UserNameAndEmailAlreadyExistException ex){
+    public ResponseEntity<?> handleUserNameAndEmailAlreadyExistException(UserNameAndEmailAlreadyExistException ex){
         ErrorDetailsDTO errorDetailsDTO = new ErrorDetailsDTO("Conflict: " + ex.getMessage(), HttpStatus.CONFLICT);
         return ResponseEntity.status(HttpStatus.CONFLICT).body(errorDetailsDTO);
     }
 
+    @ExceptionHandler(UnauthorizedAccessException.class)
+    public ResponseEntity<?> handleUnauthorizedAccessExceptions(UnauthorizedAccessException ex){
+        ErrorDetailsDTO errorDetailsDTO = new ErrorDetailsDTO("Conflict: " + ex.getMessage(), HttpStatus.FORBIDDEN);
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(errorDetailsDTO);
+    }
 }
