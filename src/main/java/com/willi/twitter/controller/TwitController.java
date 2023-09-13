@@ -66,36 +66,18 @@ public class TwitController {
     }
 
     @DeleteMapping("{userId}/tweets")
-    public ResponseEntity<?> deleteTweet(@PathVariable Long userId,@RequestBody DeleteDTO tweetTarget){
+    public ResponseEntity<?> deleteTweet(@PathVariable Long userId, @RequestBody DeleteDTO tweetTarget){
         Long tweetToDeletedId = tweetTarget.getTargetTwitId();
         tweetService.deleteTweet(userId, tweetToDeletedId);
         return ResponseEntity.ok().build();
     }
 
-//
-//    @PatchMapping("/user/{userId}/twits/{twitId}/like")
-//    public ResponseEntity<?> like(@PathVariable Long userId, @PathVariable Long twitId, @RequestBody UserLikeDTO userLikeTwit){
-//        tweetService.like(userId, twitId, userLikeTwit);
-//        return ResponseEntity.ok().build();
-//    }
-//
-//    @PostMapping("/user/{sourceUserId}/twits/retweet")
-//    public ResponseEntity<?> retweet(@PathVariable Long retweetingUserId, @RequestBody RetweetDTO targetRetweet){
-//        tweetService.retweet(retweetingUserId, targetRetweet);
-//        return ResponseEntity.ok().build();
-//    }
-//
-//    @PostMapping("/twit/btc")
-//    public ResponseEntity<?> generateBTCTwit(){
-//        tweetService.generateBTCTwit();
-//        return ResponseEntity.ok().build();
-//    }
-//
-//    @DeleteMapping("/user/{userId}/twits")
-//    public ResponseEntity<?> deleteTwit(@RequestBody DeleteDTO twitToDelete, @PathVariable Long userId){
-//        tweetService.deleteTwit(userId, twitToDelete);
-//        return ResponseEntity.ok().build();
-//    }
+    @PostMapping("{userId}/twit/btc")
+    public ResponseEntity<?> generateBTCTwit(@PathVariable Long userId){
+        tweetService.generateBTCTwit(userId);
+        return ResponseEntity.ok().build();
+    }
+ 
 
 
 }

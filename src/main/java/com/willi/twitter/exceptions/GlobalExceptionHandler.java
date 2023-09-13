@@ -37,4 +37,10 @@ public class GlobalExceptionHandler {
         ErrorDetailsDTO errorDetailsDTO = new ErrorDetailsDTO("Conflict: " + ex.getMessage(), HttpStatus.FORBIDDEN);
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(errorDetailsDTO);
     }
+
+    @ExceptionHandler(TweetTooLongException.class)
+    public ResponseEntity<?> handlerTweetTooLongException(TweetTooLongException ex){
+        ErrorDetailsDTO errorDetailsDTO = new ErrorDetailsDTO("Conflict: " + ex.getMessage(), HttpStatus.BAD_REQUEST);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorDetailsDTO);
+    }
 }
